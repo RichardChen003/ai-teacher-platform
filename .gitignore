@@ -1,0 +1,29 @@
+# deps / build
+node_modules/
+dist/
+.wrangler/
+.dev.vars
+
+# env & secrets
+*.local
+.env
+.env.*
+
+# logs
+*.log
+npm-debug.log*
+
+# os
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# 本地开发临时产物
+.e2e-shots/
+.workbuddy/
+
+# downloaded resources are kept in repo for dev convenience (licenses in docs/02)
+# resources/ is intentionally NOT ignored

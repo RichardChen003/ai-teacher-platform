@@ -1,0 +1,70 @@
+# AI 老师平台 · 全栈 Worker 配置（Static Assets + API 同仓部署）
+# 使用前：wrangler d1 create ai-teacher-db 等命令创建资源，并填入真实 id
+
+name = "ai-teacher-platform"
+main = "apps/api/src/index.ts"
+compatibility_date = "2026-08-01"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+# ---------- 前端静态资源（构建产物） ----------
+[assets]
+directory = "apps/web/dist"
+not_found_handling = "single-page-application"   # SPA 回退到 index.html
+
+# ---------- 数据库 ----------
+[[d1_databases]]
+binding = "DB"
+database_name = "ai-teacher-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"     # wrangler d1 create 后填入
+migrations_dir = "infra/d1/migrations"
+
+# ---------- 对象存储 ----------
+[[r2_buckets]]
+binding = "PPT_ASSETS"
+bucket_name = "ai-teacher-ppt"
+
+[[r2_buckets]]
+binding = "AVATAR_ASSETS"
+bucket_name = "ai-teacher-avatar"
+
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "ai-teacher-uploads"
+
+# ---------- KV（会话/缓存/任务状态） ----------
+[[kv_namespaces]]
+binding = "KV"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"             # wrangler kv namespace create KV 后填入
+
+# ---------- 队列（异步生成任务） ----------
+[[queues.producers]]
+binding = "QUEUE_PPT"
+queue = "ai-teacher-ppt-gen"
+
+[[queues.producers]]
+binding = "QUEUE_SYLLABUS"
+queue = "ai-teacher-syllabus-gen"
+
+[[queues.producers]]
+binding = "QUEUE_QUIZ"
+queue = "ai-teacher-quiz-gen"
+
+[[queues.producers]]
+binding = "QUEUE_TTS"
+queue = "ai-teacher-tts-gen"
+
+# ---------- 环境变量（敏感值用 .dev.vars / Secrets） ----------
+[vars]
+APP_NAME = "AI老师平台"
+LLM_PROVIDER = "deepseek"
+LLM_MODEL = "deepseek-chat"                     # DeepSeek-V3.2（非思考模式）
+LLM_FALLBACK_MODEL = "glm-4-flash"
+AI_GATEWAY_BASE_URL = "https://gateway.ai.cloudflare.com/v1/REPLACE_WITH_ACCOUNT/REPLACE_WITH_GATEWAY"
+TTS_PROVIDER = "edge"                           # edge | volc | ali
+CONTENT_SAFETY_PROVIDER = "tencent"             # tencent | ali
+DEMO_MODE = "true"                              # 免登录演示模式（上线前改为 false / 移除）
+
+# ---------- Cron（定时任务） ----------
+[triggers]
+crons = ["0 4 * * *"]   # 每日 04:00 UTC：D1 备份到 R2、任务重试、用量报表

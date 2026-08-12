@@ -1,0 +1,519 @@
+{
+  "fetchedAt": "2026-08-12T12:15:15.709Z",
+  "items": [
+    {
+      "name": "data/v1_1/gaokao-mathqa.jsonl",
+      "source": "https://github.com/ruixiangcui/AGIEval",
+      "license": "MIT (data from public exams; check original licenses)",
+      "bytes": 139660,
+      "usage": "dev-validation-only"
+    },
+    {
+      "name": "data/v1_1/gaokao-mathcloze.jsonl",
+      "source": "https://github.com/ruixiangcui/AGIEval",
+      "license": "MIT (data from public exams; check original licenses)",
+      "bytes": 38690,
+      "usage": "dev-validation-only"
+    },
+    {
+      "name": "ch_single_choice_constructed_5K/ch_single_choice_train_3K.jsonl",
+      "source": "https://github.com/math-eval/TAL-SCQ5K",
+      "license": "research-use (TAL 好未来); NOT for production question bank",
+      "bytes": 3899222,
+      "usage": "dev-validation-only"
+    },
+    {
+      "name": "ch_single_choice_constructed_5K/ch_single_choice_test_2K.jsonl",
+      "source": "https://github.com/math-eval/TAL-SCQ5K",
+      "license": "research-use (TAL 好未来); NOT for production question bank",
+      "bytes": 2701829,
+      "usage": "dev-validation-only"
+    },
+    {
+      "name": "data/Math_23K.json",
+      "source": "https://github.com/ShichaoSun/math_seq2tree",
+      "license": "research-use; dev-validation-only",
+      "bytes": 8742552,
+      "usage": "dev-validation-only"
+    },
+    {
+      "name": "Samples/Resources/Haru/Haru.2048/texture_00.png",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 1526786,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/Haru.2048/texture_01.png",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 1188664,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/Haru.cdi3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 5536,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/Haru.moc3",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 384704,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/Haru.model3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 2083,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/Haru.physics3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 5914,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/Haru.pose3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 274,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/Haru.userdata3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 313,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/expressions/F01.exp3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 124,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/expressions/F02.exp3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 464,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/expressions/F03.exp3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 739,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/expressions/F04.exp3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 841,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/expressions/F05.exp3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 474,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/expressions/F06.exp3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 475,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/expressions/F07.exp3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 907,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/expressions/F08.exp3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 421,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_idle.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 21183,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m01.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 11944,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m02.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 12055,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m03.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 16981,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m04.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 23449,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m05.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 14198,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m06.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 15118,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m07.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 14821,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m08.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 15439,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m09.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 25066,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m10.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 34954,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m11.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 14475,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m12.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 22441,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m13.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 11601,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m14.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 20625,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m15.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 13540,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m16.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 18639,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m17.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 16109,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m18.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 13424,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m19.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 11302,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m20.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 23651,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m21.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 23906,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m22.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 27408,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m23.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 16695,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m24.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 18090,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m25.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 17528,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/motions/haru_g_m26.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 23275,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/sounds/haru_Info_04.wav",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 111354,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/sounds/haru_Info_14.wav",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 267922,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/sounds/haru_normal_6.wav",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 142374,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Haru/sounds/haru_talk_13.wav",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 138862,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/Hiyori.2048/texture_00.png",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 1814312,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/Hiyori.2048/texture_01.png",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 2504416,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/Hiyori.cdi3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 9660,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/Hiyori.moc3",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 443648,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/Hiyori.model3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 1736,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/Hiyori.physics3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 26160,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/Hiyori.pose3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 166,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/Hiyori.userdata3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 623,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/motions/Hiyori_m01.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 10622,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/motions/Hiyori_m02.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 14248,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/motions/Hiyori_m03.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 12732,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/motions/Hiyori_m04.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 8772,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/motions/Hiyori_m05.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 16061,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/motions/Hiyori_m06.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 19492,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/motions/Hiyori_m07.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 9636,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/motions/Hiyori_m08.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 10551,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/motions/Hiyori_m09.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 11479,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "Samples/Resources/Hiyori/motions/Hiyori_m10.motion3.json",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "license": "Live2D official sample model — dev placeholder only; replace before production",
+      "bytes": 9604,
+      "usage": "dev-placeholder"
+    },
+    {
+      "name": "AGIEval-LICENSE.txt",
+      "source": "https://github.com/ruixiangcui/AGIEval",
+      "bytes": 1141,
+      "usage": "license-record"
+    },
+    {
+      "name": "TAL-SCQ5K-README.md",
+      "source": "https://github.com/math-eval/TAL-SCQ5K",
+      "bytes": 4402,
+      "usage": "license-record"
+    },
+    {
+      "name": "Math23K-LICENSE.txt",
+      "source": "https://github.com/ShichaoSun/math_seq2tree",
+      "bytes": 35148,
+      "usage": "license-record"
+    },
+    {
+      "name": "Live2D-LICENSE.txt",
+      "source": "https://github.com/Live2D/CubismWebSamples",
+      "bytes": 3042,
+      "usage": "license-record"
+    }
+  ]
+}

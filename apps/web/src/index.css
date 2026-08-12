@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* ============ AI 老师平台 · 设计系统 ============ */
+@theme {
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #dce7fd;
+  --color-brand-200: #c0d5fc;
+  --color-brand-300: #94baf8;
+  --color-brand-400: #6194f2;
+  --color-brand-500: #3e70eb;
+  --color-brand-600: #2b53df;
+  --color-brand-700: #2341cc;
+  --color-brand-800: #2138a6;
+  --color-brand-900: #1f3383;
+  --color-brand-950: #17214f;
+
+  --color-accent-50: #fff5ed;
+  --color-accent-100: #ffe8d5;
+  --color-accent-200: #fecdaa;
+  --color-accent-300: #fdaa74;
+  --color-accent-400: #fb7d3c;
+  --color-accent-500: #f95c16;
+  --color-accent-600: #ea420c;
+  --color-accent-700: #c22f0c;
+  --color-accent-800: #9a2712;
+  --color-accent-900: #7c2312;
+
+  --font-sans: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+  font-family: var(--font-sans);
+  background-image:
+    radial-gradient(60rem 40rem at 110% -10%, rgb(46 82 222 / 0.07), transparent 60%),
+    radial-gradient(50rem 36rem at -20% 0%, rgb(249 92 22 / 0.05), transparent 55%);
+  background-attachment: fixed;
+}
+
+/* ---------- 通用组件类 ---------- */
+.card {
+  @apply rounded-2xl border border-slate-200/70 bg-white shadow-[0_1px_3px_rgb(15_23_42/0.04),0_8px_24px_-12px_rgb(15_23_42/0.12)];
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-150 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50;
+  background-image: linear-gradient(to bottom, var(--color-brand-500), var(--color-brand-600));
+  color: #fff;
+  box-shadow: 0 4px 14px -4px rgb(43 83 223 / 0.55);
+}
+.btn-primary:hover { background-image: linear-gradient(to bottom, var(--color-brand-600), var(--color-brand-700)); }
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-accent {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-150 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50;
+  background-image: linear-gradient(to bottom, var(--color-accent-400), var(--color-accent-500));
+  color: #fff;
+  box-shadow: 0 4px 14px -4px rgb(249 92 22 / 0.55);
+}
+.btn-accent:hover { background-image: linear-gradient(to bottom, var(--color-accent-500), var(--color-accent-600)); }
+.btn-accent:active { transform: scale(0.98); }
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-150 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50;
+}
+
+.btn-soft {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-150 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 bg-brand-50 text-brand-700 hover:bg-brand-100;
+}
+
+.input {
+  @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition-shadow focus:border-brand-400 focus:outline-none focus:ring-4 focus:ring-brand-100;
+}
+
+.badge-green { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium bg-emerald-50 text-emerald-700; }
+.badge-amber  { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium bg-amber-50 text-amber-700; }
+.badge-blue   { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium bg-brand-50 text-brand-700; }
+.badge-slate  { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium bg-slate-100 text-slate-600; }
+.badge-red    { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium bg-rose-50 text-rose-600; }
+
+/* 进度条 */
+.bar-track { @apply h-2 w-full overflow-hidden rounded-full bg-slate-100; }
+.bar-fill  { @apply h-full rounded-full bg-gradient-to-r from-brand-500 to-brand-400 transition-all duration-700; }
+
+/* 页标题 */
+.page-head { @apply mb-6 flex items-end justify-between; }
+.page-title { @apply text-2xl font-bold tracking-tight text-slate-900; }
+.page-sub { @apply mt-1 text-sm text-slate-500; }
+
+/* 动画 */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fadeUp 0.4s ease both; }
+.animate-fade-up-1 { animation: fadeUp 0.4s 0.06s ease both; }
+.animate-fade-up-2 { animation: fadeUp 0.4s 0.12s ease both; }
+.animate-fade-up-3 { animation: fadeUp 0.4s 0.18s ease both; }
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.animate-float { animation: floatY 3s ease-in-out infinite; }
+
+/* 数字人光效 */
+@keyframes pulseRing {
+  0%   { box-shadow: 0 0 0 0 rgb(59 130 246 / 0.35); }
+  70%  { box-shadow: 0 0 0 14px rgb(59 130 246 / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(59 130 246 / 0); }
+}
+.speaking-ring { animation: pulseRing 1.6s ease-out infinite; }

@@ -1,0 +1,23 @@
+{
+  "name": "ai-teacher-platform",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm -w apps/api run dev",
+    "dev:web": "npm -w apps/web run dev",
+    "dev": "npm run dev:api & npm run dev:web",
+    "build": "npm -w apps/web run build && npm -w apps/api run typecheck",
+    "deploy": "npm -w apps/web run build && wrangler deploy",
+    "db:local:init": "wrangler d1 execute ai-teacher-db --local --file=infra/d1/schema.sql && wrangler d1 execute ai-teacher-db --local --file=infra/d1/seed.sql",
+    "db:init": "wrangler d1 execute ai-teacher-db --file=infra/d1/schema.sql && wrangler d1 execute ai-teacher-db --file=infra/d1/seed.sql",
+    "resources:download": "node scripts/download_resources.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
