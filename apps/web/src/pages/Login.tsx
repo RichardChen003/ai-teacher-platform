@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn, signUp, setDemoMode } from "../lib/api";
+import { useAuth } from "../lib/auth";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { setAuthed } = useAuth();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,6 +22,7 @@ export default function Login() {
       } else {
         await signUp(name, email, password);
       }
+      setAuthed();
       navigate("/");
     } catch (e: any) {
       setError(e.message ?? "操作失败");
@@ -29,6 +32,7 @@ export default function Login() {
 
   function enterDemo() {
     setDemoMode(true);
+    setAuthed();
     navigate("/");
   }
 

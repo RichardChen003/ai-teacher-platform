@@ -27,3 +27,6 @@ Thumbs.db
 
 # downloaded resources are kept in repo for dev convenience (licenses in docs/02)
 # resources/ is intentionally NOT ignored
+
+# tsc 构建缓存
+*.tsbuildinfo
