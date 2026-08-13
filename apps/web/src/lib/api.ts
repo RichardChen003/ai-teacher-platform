@@ -9,15 +9,15 @@ export class ApiError extends Error {
   }
 }
 
-/** Demo 免登录模式标记（localStorage） */
+/** Demo 免登录模式标记（sessionStorage：仅当前标签页会话有效，重开浏览器回到登录页） */
 const DEMO_KEY = "aiteacher.demo";
 
 export function isDemoMode(): boolean {
-  return localStorage.getItem(DEMO_KEY) === "1";
+  return sessionStorage.getItem(DEMO_KEY) === "1";
 }
 export function setDemoMode(on: boolean) {
-  if (on) localStorage.setItem(DEMO_KEY, "1");
-  else localStorage.removeItem(DEMO_KEY);
+  if (on) sessionStorage.setItem(DEMO_KEY, "1");
+  else sessionStorage.removeItem(DEMO_KEY);
 }
 
 export async function api<T>(path: string, init?: RequestInit): Promise<T> {
