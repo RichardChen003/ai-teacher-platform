@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn, signUp, setDemoMode } from "../lib/api";
 import { useAuth } from "../lib/auth";
@@ -30,6 +30,20 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  // refs：用于清除浏览器自动填充残留（受控组件与 autofill 不同步）
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+
+  // 挂载后清除浏览器自动填充留下的 DOM 值，确保初始输入框空白
+  useEffect(() => {
+    const t = setTimeout(() => {
+      if (nameRef.current) nameRef.current.value = "";
+      if (emailRef.current) emailRef.current.value = "";
+      if (passwordRef.current) passwordRef.current.value = "";
+    }, 60);
+    return () => clearTimeout(t);
+  }, []);
 
   const isSignup = mode === "signup";
   // 注册模式下前端预校验（不符合则不允许提交）
@@ -131,8 +145,11 @@ export default function Login() {
               <div>
                 <label className="mb-1.5 block text-xs font-medium text-slate-500">昵称</label>
                 <input
+                  ref={nameRef}
                   className="input"
                   placeholder="2~20 个字符，如：小明"
+                  autoComplete="off"
+                  name="aiteacher-name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -144,9 +161,12 @@ export default function Login() {
             <div>
               <label className="mb-1.5 block text-xs font-medium text-slate-500">邮箱</label>
               <input
+                ref={emailRef}
                 className="input"
                 type="email"
                 placeholder="you@example.com"
+                autoComplete="off"
+                name="aiteacher-email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -157,9 +177,12 @@ export default function Login() {
             <div>
               <label className="mb-1.5 block text-xs font-medium text-slate-500">密码</label>
               <input
+                ref={passwordRef}
                 className="input"
                 type="password"
                 placeholder="至少 8 位"
+                autoComplete="new-password"
+                name="aiteacher-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
