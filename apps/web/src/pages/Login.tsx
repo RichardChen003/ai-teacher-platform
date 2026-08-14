@@ -3,6 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { signIn, signUp, setDemoMode } from "../lib/api";
 import { useAuth } from "../lib/auth";
 
+/* ---------- 注册规则（与后端 Better Auth 配置保持一致） ---------- */
+const RULES = {
+  name: { min: 2, max: 20 },       // 昵称 2~20 字符
+  email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,  // 合法邮箱格式
+  password: { min: 8, max: 128 },  // 密码 8~128 位（不强制数字+字母，但建议混合）
+};
+
+function nameValid(v: string) {
+  const len = v.trim().length;
+  return len >= RULES.name.min && len <= RULES.name.max;
+}
+function emailValid(v: string) {
+  return RULES.email.test(v);
+}
+function passwordValid(v: string) {
+  return v.length >= RULES.password.min && v.length <= RULES.password.max;
+}
+
 export default function Login() {
   const navigate = useNavigate();
   const { setAuthed } = useAuth();
@@ -13,7 +31,17 @@ export default function Login() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
+  const isSignup = mode === "signup";
+  // 注册模式下前端预校验（不符合则不允许提交）
+  const formValid =
+    !isSignup ||
+    (nameValid(name) && emailValid(email) && passwordValid(password));
+  const showNameHint = isSignup && name.length > 0 && !nameValid(name);
+  const showEmailHint = email.length > 0 && !emailValid(email);
+  const showPwdHint = isSignup && password.length > 0 && !passwordValid(password);
+
   async function submit() {
+    if (!formValid) return;
     setBusy(true);
     setError("");
     try {
@@ -99,23 +127,51 @@ export default function Login() {
           </p>
 
           <div className="mt-6 space-y-3.5">
-            {mode === "signup" && (
+            {isSignup && (
               <div>
                 <label className="mb-1.5 block text-xs font-medium text-slate-500">昵称</label>
-                <input className="input" placeholder="怎么称呼你" value={name} onChange={(e) => setName(e.target.value)} />
+                <input
+                  className="input"
+                  placeholder="2~20 个字符，如：小明"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <p className={`mt-1 text-[11px] ${showNameHint ? "text-rose-500" : "text-slate-400"}`}>
+                  {showNameHint ? `昵称需 ${RULES.name.min}~${RULES.name.max} 个字符（当前 ${name.trim().length} 个）` : "昵称：2~20 个字符，可用中文、字母、数字"}
+                </p>
               </div>
             )}
             <div>
               <label className="mb-1.5 block text-xs font-medium text-slate-500">邮箱</label>
-              <input className="input" type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input
+                className="input"
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <p className={`mt-1 text-[11px] ${showEmailHint ? "text-rose-500" : "text-slate-400"}`}>
+                {showEmailHint ? "邮箱格式不正确，请检查（示例：name@example.com）" : "邮箱：格式需为 xxx@xxx.xxx"}
+              </p>
             </div>
             <div>
               <label className="mb-1.5 block text-xs font-medium text-slate-500">密码</label>
-              <input className="input" type="password" placeholder="至少 8 位" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <input
+                className="input"
+                type="password"
+                placeholder="至少 8 位"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <p className={`mt-1 text-[11px] ${showPwdHint ? "text-rose-500" : "text-slate-400"}`}>
+                {showPwdHint
+                  ? `密码需 ${RULES.password.min}~${RULES.password.max} 位（当前 ${password.length} 位）`
+                  : "密码：8~128 位，建议字母+数字组合（不强制）"}
+              </p>
             </div>
             {error && <div className="rounded-xl bg-rose-50 px-4 py-3 text-sm text-rose-600">{error}</div>}
-            <button className="btn-primary w-full py-3" onClick={submit} disabled={busy || !email || !password}>
-              {busy ? "请稍候…" : mode === "signin" ? "登录" : "注册"}
+            <button className="btn-primary w-full py-3" onClick={submit} disabled={busy || !formValid || !email || !password}>
+              {busy ? "请稍候…" : isSignup ? "注册" : "登录"}
             </button>
           </div>
 

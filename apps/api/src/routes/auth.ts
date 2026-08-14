@@ -31,12 +31,20 @@ export function createAuth(env: Env, origin: string) {
       {
         secret: env.BETTER_AUTH_SECRET ?? "dev-secret-change-me",
         baseURL: origin,
+        // 可信来源白名单：本地开发前端走 vite (5173) 代理转发到 Worker，
+        // 浏览器携带的 Origin 是 5173，必须显式放行，否则注册/登录被拒（Invalid origin）。
+        // 生产同域部署时 origin 即前端地址（workers.dev 或自定义域名），已自动包含。
+        trustedOrigins: [origin, "http://localhost:5173", "http://127.0.0.1:5173"],
         // 表名映射：数据库 schema 使用 auth_ 前缀（infra/d1/schema.sql），
         // Better Auth 默认表名为 user/session/account/verification，必须显式映射。
         user: { modelName: "auth_user" },
         account: { modelName: "auth_account" },
         verification: { modelName: "auth_verification" },
-        emailAndPassword: { enabled: true },
+        emailAndPassword: {
+          enabled: true,
+          minPasswordLength: 8,
+          maxPasswordLength: 128,
+        },
         session: {
           modelName: "auth_session",
           expiresIn: 60 * 60 * 24 * 7, // 7 天
