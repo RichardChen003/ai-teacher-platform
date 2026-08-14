@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getMe, updateMe, isDemoMode, setDemoMode } from "../lib/api";
+import { getMe, updateMe, isDemoMode, setDemoMode, signOut } from "../lib/api";
+import { useAuth } from "../lib/auth";
 
 export default function Profile() {
   const qc = useQueryClient();
+  const { setGuest } = useAuth();
   const demo = isDemoMode();
   const { data: me, isLoading } = useQuery({ queryKey: ["me"], queryFn: getMe, retry: false });
   const [form, setForm] = useState<Record<string, string>>({});
   const [saved, setSaved] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
 
   useEffect(() => {
     if (me) {
@@ -40,6 +43,18 @@ export default function Profile() {
 
   function exitDemo() {
     setDemoMode(false);
+    setGuest();
+    window.location.href = "/login";
+  }
+
+  async function exitLogin() {
+    setSigningOut(true);
+    try {
+      await signOut(); // 清除服务端会话（httpOnly cookie）
+    } catch {
+      // 即使 sign-out 接口失败也继续本地退出，避免卡死
+    }
+    setGuest();
     window.location.href = "/login";
   }
 
@@ -64,8 +79,12 @@ export default function Profile() {
           <div className="mt-0.5 text-sm text-slate-400">{String((me as any)?.email ?? "")}</div>
           {demo && <span className="badge-amber mt-2">演示模式 · 数据保存在本地</span>}
         </div>
-        {demo && (
+        {demo ? (
           <button className="btn-ghost text-xs" onClick={exitDemo}>退出演示</button>
+        ) : (
+          <button className="btn-ghost text-xs" onClick={exitLogin} disabled={signingOut}>
+            {signingOut ? "退出中…" : "退出登录"}
+          </button>
         )}
       </div>
 

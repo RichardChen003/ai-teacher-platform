@@ -67,6 +67,17 @@ export async function signIn(email: string, password: string) {
   if (!res.ok || body?.error) throw new ApiError("AUTH_FAILED", body?.message ?? "登录失败");
   return body;
 }
+export async function signOut() {
+  const res = await fetch(`${BASE}/api/auth/sign-out`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: "{}", // Better Auth 需要 JSON body 才能解析
+  });
+  const body = await res.json().catch(() => null);
+  if (!res.ok && body?.error) throw new ApiError("SIGN_OUT_FAILED", body?.message ?? "退出失败");
+  return body;
+}
 
 // ---------- 知识点图谱 ----------
 export const getKnowledgeTree = (subject: string, stage: string) =>
