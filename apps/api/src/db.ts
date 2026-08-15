@@ -28,7 +28,25 @@ export async function ensureUserProfile(
   authUser: { id: string; email: string; name: string }
 ) {
   const existing = await getUser(c, authUser.id);
-  if (existing) return existing;
+  if (existing) {
+    // 同步 auth_user 的最新邮箱/昵称到业务表（改邮箱/改昵称后保持一致）
+    const emailChanged = String(existing.email ?? "") !== String(authUser.email ?? "");
+    const nameChanged = String(existing.name ?? "") !== String(authUser.name ?? "");
+    if (emailChanged || nameChanged) {
+      await c.env.DB.prepare(
+        `UPDATE users SET ${emailChanged ? "email = ?," : ""} ${nameChanged ? "name = ?," : ""} updated_at = ? WHERE id = ?`
+      )
+        .bind(
+          ...(emailChanged ? [authUser.email] : []),
+          ...(nameChanged ? [authUser.name] : []),
+          now(),
+          authUser.id
+        )
+        .run();
+      return getUser(c, authUser.id);
+    }
+    return existing;
+  }
   await c.env.DB.prepare(
     "INSERT INTO users (id, email, name, role, weekly_hours) VALUES (?, ?, ?, 'student', 4)"
   )

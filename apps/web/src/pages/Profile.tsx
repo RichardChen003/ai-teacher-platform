@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getMe, updateMe, isDemoMode, setDemoMode, signOut } from "../lib/api";
+import { getMe, updateMe, isDemoMode, setDemoMode, signOut, changeEmail, changePassword } from "../lib/api";
 import { useAuth } from "../lib/auth";
 
 export default function Profile() {
@@ -12,6 +12,12 @@ export default function Profile() {
   const [saved, setSaved] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
 
+  // 账号与安全：改邮箱 / 改密码表单
+  const [emailForm, setEmailForm] = useState({ newEmail: "" });
+  const [pwdForm, setPwdForm] = useState({ currentPassword: "", newPassword: "", confirm: "" });
+  const [emailMsg, setEmailMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [pwdMsg, setPwdMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
   useEffect(() => {
     if (me) {
       const m = me as any;
@@ -22,6 +28,7 @@ export default function Profile() {
         weeklyHours: String(m.weeklyHours ?? m.weekly_hours ?? 4),
         goal: m.goalDate ?? m.goal ?? "",
       });
+      setEmailForm({ newEmail: m.email ?? "" });
     }
   }, [me]);
 
@@ -43,6 +50,37 @@ export default function Profile() {
       alert(`保存失败：${e?.message ?? "未知错误"}`);
     },
   });
+
+  // 修改邮箱
+  const saveEmail = useMutation({
+    mutationFn: () => changeEmail(emailForm.newEmail.trim()),
+    onSuccess: () => {
+      setEmailMsg({ ok: true, text: "✓ 邮箱已更新" });
+      qc.invalidateQueries({ queryKey: ["me"] });
+      setTimeout(() => setEmailMsg(null), 3000);
+    },
+    onError: (e: any) => {
+      setEmailMsg({ ok: false, text: `✗ ${e?.message ?? "修改邮箱失败"}` });
+    },
+  });
+
+  // 修改密码
+  const savePwd = useMutation({
+    mutationFn: () => changePassword(pwdForm.currentPassword, pwdForm.newPassword),
+    onSuccess: () => {
+      setPwdMsg({ ok: true, text: "✓ 密码已修改，下次登录请使用新密码" });
+      setPwdForm({ currentPassword: "", newPassword: "", confirm: "" });
+      setTimeout(() => setPwdMsg(null), 4000);
+    },
+    onError: (e: any) => {
+      setPwdMsg({ ok: false, text: `✗ ${e?.message ?? "修改密码失败"}` });
+    },
+  });
+
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailForm.newEmail.trim());
+  const pwdRulesOk = pwdForm.newPassword.length >= 8 && pwdForm.newPassword.length <= 128;
+  const pwdMatch = pwdForm.newPassword === pwdForm.confirm;
+  const pwdSubmitable = !!pwdForm.currentPassword && pwdRulesOk && pwdMatch;
 
   function exitDemo() {
     setDemoMode(false);
@@ -136,6 +174,88 @@ export default function Profile() {
           {saved && <span className="text-sm text-emerald-600">✓ 已保存</span>}
         </div>
       </div>
+
+      {/* 账号与安全（仅真实账号；Demo 模式无此模块） */}
+      {!demo && (
+        <div className="card animate-fade-up-2 p-6">
+          <h3 className="font-semibold text-slate-800">账号与安全</h3>
+          <p className="mt-1 text-xs text-slate-400">修改登录邮箱与密码（需登录状态）</p>
+
+          {/* 修改邮箱 */}
+          <div className="mt-5 border-t border-slate-100 pt-5">
+            <label className="mb-1.5 block text-xs font-medium text-slate-500">登录邮箱</label>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
+              <input
+                className="input sm:max-w-xs"
+                type="email"
+                value={emailForm.newEmail}
+                onChange={(e) => { setEmailForm({ newEmail: e.target.value }); setEmailMsg(null); }}
+                placeholder="you@example.com"
+                autoComplete="off"
+              />
+              <button
+                className="btn-primary shrink-0 sm:mt-0"
+                onClick={() => saveEmail.mutate()}
+                disabled={saveEmail.isPending || !emailValid || emailForm.newEmail.trim() === String((me as any)?.email ?? "")}
+              >
+                {saveEmail.isPending ? "保存中…" : "保存新邮箱"}
+              </button>
+            </div>
+            {emailMsg && (
+              <p className={`mt-2 text-xs ${emailMsg.ok ? "text-emerald-600" : "text-rose-500"}`}>{emailMsg.text}</p>
+            )}
+          </div>
+
+          {/* 修改密码 */}
+          <div className="mt-6 border-t border-slate-100 pt-5">
+            <label className="mb-1.5 block text-xs font-medium text-slate-500">当前密码</label>
+            <input
+              className="input sm:max-w-xs"
+              type="password"
+              value={pwdForm.currentPassword}
+              onChange={(e) => { setPwdForm({ ...pwdForm, currentPassword: e.target.value }); setPwdMsg(null); }}
+              placeholder="输入当前密码"
+              autoComplete="off"
+            />
+            <label className="mb-1.5 mt-4 block text-xs font-medium text-slate-500">新密码（8~128 位）</label>
+            <input
+              className="input sm:max-w-xs"
+              type="password"
+              value={pwdForm.newPassword}
+              onChange={(e) => { setPwdForm({ ...pwdForm, newPassword: e.target.value }); setPwdMsg(null); }}
+              placeholder="8~128 位，建议字母+数字"
+              autoComplete="new-password"
+            />
+            <label className="mb-1.5 mt-4 block text-xs font-medium text-slate-500">确认新密码</label>
+            <input
+              className="input sm:max-w-xs"
+              type="password"
+              value={pwdForm.confirm}
+              onChange={(e) => { setPwdForm({ ...pwdForm, confirm: e.target.value }); setPwdMsg(null); }}
+              placeholder="再次输入新密码"
+              autoComplete="new-password"
+            />
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              <button
+                className="btn-primary"
+                onClick={() => savePwd.mutate()}
+                disabled={savePwd.isPending || !pwdSubmitable}
+              >
+                {savePwd.isPending ? "保存中…" : "保存新密码"}
+              </button>
+              {!pwdRulesOk && pwdForm.newPassword.length > 0 && (
+                <span className="text-xs text-rose-500">新密码需 8~128 位</span>
+              )}
+              {pwdRulesOk && !pwdMatch && pwdForm.confirm.length > 0 && (
+                <span className="text-xs text-rose-500">两次密码不一致</span>
+              )}
+            </div>
+            {pwdMsg && (
+              <p className={`mt-2 text-xs ${pwdMsg.ok ? "text-emerald-600" : "text-rose-500"}`}>{pwdMsg.text}</p>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* 关于 */}
       <div className="card animate-fade-up-2 p-6 text-xs leading-relaxed text-slate-400">

@@ -37,7 +37,15 @@ export function createAuth(env: Env, origin: string) {
         trustedOrigins: [origin, "http://localhost:5173", "http://127.0.0.1:5173"],
         // 表名映射：数据库 schema 使用 auth_ 前缀（infra/d1/schema.sql），
         // Better Auth 默认表名为 user/session/account/verification，必须显式映射。
-        user: { modelName: "auth_user" },
+        user: {
+          modelName: "auth_user",
+          // 开启改邮箱：当前注册用户 emailVerified=false，updateEmailWithoutVerification
+          // 允许未验证邮箱直接改（MVP 无邮件验证）；接入邮件验证后可改为 false 走验证流。
+          changeEmail: {
+            enabled: true,
+            updateEmailWithoutVerification: true,
+          },
+        },
         account: { modelName: "auth_account" },
         verification: { modelName: "auth_verification" },
         emailAndPassword: {

@@ -78,6 +78,30 @@ export async function signOut() {
   if (!res.ok && body?.error) throw new ApiError("SIGN_OUT_FAILED", body?.message ?? "退出失败");
   return body;
 }
+/** 修改密码（需当前密码验证） */
+export async function changePassword(currentPassword: string, newPassword: string) {
+  const res = await fetch(`${BASE}/api/auth/change-password`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+  const body = await res.json().catch(() => null);
+  if (!res.ok || body?.error) throw new ApiError("CHANGE_PASSWORD_FAILED", body?.message ?? "修改密码失败");
+  return body;
+}
+/** 修改邮箱（当前未验证邮箱直接生效） */
+export async function changeEmail(newEmail: string) {
+  const res = await fetch(`${BASE}/api/auth/change-email`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ newEmail }),
+  });
+  const body = await res.json().catch(() => null);
+  if (!res.ok || body?.error) throw new ApiError("CHANGE_EMAIL_FAILED", body?.message ?? "修改邮箱失败");
+  return body;
+}
 
 // ---------- 知识点图谱 ----------
 export const getKnowledgeTree = (subject: string, stage: string) =>
