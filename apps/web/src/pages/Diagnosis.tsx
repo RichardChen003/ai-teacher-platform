@@ -7,6 +7,7 @@ import {
   type Question,
   type DiagnosisReport,
 } from "../lib/api";
+import { gradeLabel } from "../lib/grade";
 
 type Phase = "config" | "quiz" | "report";
 
@@ -287,7 +288,7 @@ export default function Diagnosis() {
                       : "border-slate-200 text-slate-600 hover:border-brand-200"
                   }`}
                 >
-                  {g <= 9 ? `初${g}` : `高${g - 9}`}
+                  {gradeLabel(g)}
                 </button>
               ))}
             </div>
