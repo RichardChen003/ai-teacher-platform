@@ -32,7 +32,7 @@ export const UserProfileSchema = z.object({
   subject: z.string().nullable(),
   textbookVersion: z.string().nullable(),
   goalDate: z.string().nullable(),
-  weeklyHours: z.number().min(0.5).max(20).default(4),
+  weeklyHours: z.number().min(0.5).max(20).optional(),
   createdAt: z.string(),
 });
 export type UserProfile = z.infer<typeof UserProfileSchema>;

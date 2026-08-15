@@ -19,8 +19,8 @@ export default function Profile() {
         name: m.name ?? "",
         grade: String(m.grade ?? 7),
         subject: m.subject ?? "math",
-        weeklyHours: String(m.weekly_hours ?? 4),
-        goal: m.goal ?? "",
+        weeklyHours: String(m.weeklyHours ?? m.weekly_hours ?? 4),
+        goal: m.goalDate ?? m.goal ?? "",
       });
     }
   }, [me]);
@@ -31,13 +31,16 @@ export default function Profile() {
         name: form.name,
         grade: Number(form.grade),
         subject: form.subject,
-        weekly_hours: Number(form.weeklyHours),
-        goal: form.goal,
+        weeklyHours: Number(form.weeklyHours),
+        goalDate: form.goal,
       }),
     onSuccess: () => {
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
       qc.invalidateQueries({ queryKey: ["me"] });
+    },
+    onError: (e: any) => {
+      alert(`保存失败：${e?.message ?? "未知错误"}`);
     },
   });
 

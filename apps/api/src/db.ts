@@ -37,19 +37,43 @@ export async function ensureUserProfile(
   return getUser(c, authUser.id);
 }
 
+/** API 字段名(camelCase) → 数据库列名(snake_case) 映射 */
+const PROFILE_FIELD_MAP: Record<string, string> = {
+  name: "name",
+  grade: "grade",
+  subject: "subject",
+  textbookVersion: "textbook_version",
+  goalDate: "goal_date",
+  weeklyHours: "weekly_hours",
+  avatarUrl: "avatar_url",
+};
+
+/** 数据库行 → API 响应对象（camelCase） */
+export function profileToApi(row: Record<string, unknown>): Record<string, unknown> {
+  const out: Record<string, unknown> = { ...row };
+  out.textbookVersion = out.textbook_version;
+  out.goalDate = out.goal_date;
+  out.weeklyHours = out.weekly_hours;
+  out.avatarUrl = out.avatar_url;
+  delete out.textbook_version;
+  delete out.goal_date;
+  delete out.weekly_hours;
+  delete out.avatar_url;
+  return out;
+}
+
 export async function upsertUserProfile(
   c: { env: Env },
   userId: string,
   patch: Record<string, unknown>
 ) {
-  const sets = Object.entries(patch)
-    .filter(([, v]) => v !== undefined)
-    .map(([k]) => `${k} = ?`)
-    .join(", ");
-  if (!sets) return getUser(c, userId);
-  const values = Object.entries(patch)
-    .filter(([, v]) => v !== undefined)
-    .map(([, v]) => String(v));
+  // 仅保留合法字段，并映射为数据库列名
+  const entries = Object.entries(patch)
+    .filter(([k]) => PROFILE_FIELD_MAP[k] !== undefined && patch[k] !== undefined)
+    .map(([k, v]) => [PROFILE_FIELD_MAP[k], v] as const);
+  if (!entries.length) return getUser(c, userId);
+  const sets = entries.map(([col]) => `${col} = ?`).join(", ");
+  const values = entries.map(([, v]) => String(v));
   await c.env.DB.prepare(
     `UPDATE users SET ${sets}, updated_at = ? WHERE id = ?`
   )
