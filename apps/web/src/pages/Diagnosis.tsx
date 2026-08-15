@@ -278,7 +278,7 @@ export default function Diagnosis() {
           <div className="mt-7">
             <SectionLabel icon="🎓" text="就读年级" />
             <div className="mt-3 grid grid-cols-5 gap-2">
-              {[7, 8, 9, 10, 11].map((g) => (
+              {[7, 8, 9, 10, 11, 12].map((g) => (
                 <button
                   key={g}
                   onClick={() => setGrade(g)}

@@ -117,7 +117,7 @@ export async function drawQuestions(
   c: { env: Env },
   opts: {
     subject: string;
-    gradeLevel: number;
+    gradeLevel: number | null; // null = 不限年级（高三总复习覆盖整个高中）
     stage: string;
     knowledgePointIds: string[];
     count: number;
@@ -126,13 +126,18 @@ export async function drawQuestions(
   // MVP：按知识点分组抽样，难度分层（基础 40% / 中档 40% / 拔高 20%）
   // 进阶：IRT 自适应组卷（见 docs/01 §5.1）
   const kpIn = opts.knowledgePointIds.map(() => "?").join(",");
+  const gradeCond = opts.gradeLevel === null ? "" : "AND grade_level = ? ";
   const { results } = await c.env.DB.prepare(
     `SELECT * FROM questions
-     WHERE subject = ? AND grade_level = ? AND review_status = 'approved'
-       AND knowledge_point_id IN (${kpIn})
+     WHERE subject = ? AND review_status = 'approved'
+       ${gradeCond} AND knowledge_point_id IN (${kpIn})
      ORDER BY difficulty ASC`
   )
-    .bind(opts.subject, opts.gradeLevel, ...opts.knowledgePointIds)
+    .bind(
+      opts.subject,
+      ...(opts.gradeLevel === null ? [] : [opts.gradeLevel]),
+      ...opts.knowledgePointIds
+    )
     .all();
   return pickStratified(results as unknown[], opts.count);
 }

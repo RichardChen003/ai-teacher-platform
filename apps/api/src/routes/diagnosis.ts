@@ -19,16 +19,24 @@ export const diagnosisRoutes = new Hono<{ Bindings: Env }>()
     if (!userId) return c.json({ ok: false, code: "UNAUTHORIZED", message: "请先登录" }, 401);
     const input = c.req.valid("json");
     const stage = input.grade <= 9 ? "初中" : "高中";
-    const kps = await c.env.DB.prepare(
-      "SELECT id FROM knowledge_points WHERE subject = ? AND stage = ? AND grade_level = ?"
-    )
-      .bind(input.subject, stage, input.grade)
-      .all();
+    // 高三（12）为总复习阶段：诊断覆盖整个高中内容；其余年级按年级精确匹配
+    const isReview = input.grade === 12;
+    const kps = isReview
+      ? await c.env.DB.prepare(
+          "SELECT id FROM knowledge_points WHERE subject = ? AND stage = ?"
+        )
+          .bind(input.subject, stage)
+          .all()
+      : await c.env.DB.prepare(
+          "SELECT id FROM knowledge_points WHERE subject = ? AND stage = ? AND grade_level = ?"
+        )
+          .bind(input.subject, stage, input.grade)
+          .all();
     const kpIds = (kps.results ?? []).map((r: any) => String(r.id));
     // 组卷：按知识点分层抽样（题库为空时返回空卷提示）
     const picked = await drawQuestions(c, {
       subject: input.subject,
-      gradeLevel: input.grade,
+      gradeLevel: isReview ? null : input.grade,
       stage,
       knowledgePointIds: kpIds.length ? kpIds : [""],
       count: input.questionCount,
