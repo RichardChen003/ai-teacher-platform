@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getMe, updateMe, isDemoMode, setDemoMode, signOut, changeEmail, changePassword } from "../lib/api";
 import { useAuth } from "../lib/auth";
-import { gradeLabel } from "../lib/grade";
+import { gradeLabel, ALL_GRADES } from "../lib/grade";
 
 export default function Profile() {
   const qc = useQueryClient();
@@ -141,7 +141,7 @@ export default function Profile() {
           <div>
             <label className="mb-1.5 block text-xs font-medium text-slate-500">年级</label>
             <select className="input" value={form.grade ?? "7"} onChange={(e) => setForm({ ...form, grade: e.target.value })}>
-              {[7, 8, 9, 10, 11, 12].map((g) => (
+              {ALL_GRADES.map((g) => (
                 <option key={g} value={g}>{gradeLabel(g)}</option>
               ))}
             </select>

@@ -7,7 +7,7 @@ import {
   type Question,
   type DiagnosisReport,
 } from "../lib/api";
-import { gradeLabel } from "../lib/grade";
+import { gradeLabel, JUNIOR_GRADES, SENIOR_GRADES } from "../lib/grade";
 
 type Phase = "config" | "quiz" | "report";
 
@@ -277,12 +277,29 @@ export default function Diagnosis() {
 
           <div className="mt-7">
             <SectionLabel icon="🎓" text="就读年级" />
-            <div className="mt-3 grid grid-cols-5 gap-2">
-              {[7, 8, 9, 10, 11, 12].map((g) => (
+            {/* 初中一行 6 个（初一上~初三下） */}
+            <div className="mt-3 grid grid-cols-6 gap-2">
+              {JUNIOR_GRADES.map((g) => (
                 <button
                   key={g}
                   onClick={() => setGrade(g)}
-                  className={`rounded-xl border py-2.5 text-sm font-medium transition-all ${
+                  className={`rounded-xl border px-1 py-2.5 text-sm font-medium transition-all ${
+                    grade === g
+                      ? "border-brand-400 bg-brand-600 text-white shadow-[0_4px_12px_-2px_rgb(43_83_223/0.4)]"
+                      : "border-slate-200 text-slate-600 hover:border-brand-200"
+                  }`}
+                >
+                  {gradeLabel(g)}
+                </button>
+              ))}
+            </div>
+            {/* 高中一行 6 个（高一上~高三下） */}
+            <div className="mt-2 grid grid-cols-6 gap-2">
+              {SENIOR_GRADES.map((g) => (
+                <button
+                  key={g}
+                  onClick={() => setGrade(g)}
+                  className={`rounded-xl border px-1 py-2.5 text-sm font-medium transition-all ${
                     grade === g
                       ? "border-brand-400 bg-brand-600 text-white shadow-[0_4px_12px_-2px_rgb(43_83_223/0.4)]"
                       : "border-slate-200 text-slate-600 hover:border-brand-200"

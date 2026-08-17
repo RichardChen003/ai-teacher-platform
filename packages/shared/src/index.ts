@@ -28,7 +28,7 @@ export const UserProfileSchema = z.object({
   email: z.string().email().optional(),
   name: z.string(),
   role: z.enum(ROLES),
-  grade: z.number().int().min(7).max(12).nullable(),
+  grade: z.number().int().min(7).max(18).nullable(), // 学期粒度：7=初一上 … 18=高三下
   subject: z.string().nullable(),
   textbookVersion: z.string().nullable(),
   goalDate: z.string().nullable(),
@@ -102,7 +102,7 @@ export type Assessment = z.infer<typeof AssessmentSchema>;
 // 入测发起
 export const CreateDiagnosisSchema = z.object({
   subject: z.string().min(1),
-  grade: z.number().int().min(7).max(12),
+  grade: z.number().int().min(7).max(18), // 学期粒度：7=初一上 … 18=高三下
   textbookVersion: z.string().optional(),
   questionCount: z.number().int().min(10).max(30).default(18),
 });

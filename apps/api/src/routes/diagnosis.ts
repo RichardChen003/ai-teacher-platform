@@ -18,9 +18,10 @@ export const diagnosisRoutes = new Hono<{ Bindings: Env }>()
     const userId = await requireUserId(c);
     if (!userId) return c.json({ ok: false, code: "UNAUTHORIZED", message: "请先登录" }, 401);
     const input = c.req.valid("json");
-    const stage = input.grade <= 9 ? "初中" : "高中";
-    // 高三（12）为总复习阶段：诊断覆盖整个高中内容；其余年级按年级精确匹配
-    const isReview = input.grade === 12;
+    // 学期粒度：7~12 初中（初一上~初三下），13~18 高中（高一上~高三下）
+    const stage = input.grade <= 12 ? "初中" : "高中";
+    // 高三（17/18）为总复习阶段：诊断覆盖整个高中内容；其余年级按学期精确匹配
+    const isReview = input.grade >= 17;
     const kps = isReview
       ? await c.env.DB.prepare(
           "SELECT id FROM knowledge_points WHERE subject = ? AND stage = ?"
