@@ -122,7 +122,13 @@ export type Question = {
   options?: Array<{ key: string; text: string }>;
 };
 
-export function startDiagnosis(input: { subject: string; grade: number; questionCount: number }) {
+export function startDiagnosis(input: {
+  subject: string;
+  grade: number;
+  region?: string;
+  textbookVersion?: string;
+  questionCount: number;
+}) {
   return api<{ assessmentId: string; questions: Question[] }>("/diagnosis", {
     method: "POST",
     body: JSON.stringify(input),

@@ -121,25 +121,55 @@ export async function drawQuestions(
     stage: string;
     knowledgePointIds: string[];
     count: number;
+    textbookVersion?: string;  // 教材版本过滤；"通用"或空 = 不按版本过滤
   }
 ) {
   // MVP：按知识点分组抽样，难度分层（基础 40% / 中档 40% / 拔高 20%）
   // 进阶：IRT 自适应组卷（见 docs/01 §5.1）
   const kpIn = opts.knowledgePointIds.map(() => "?").join(",");
   const gradeCond = opts.gradeLevel === null ? "" : "AND grade_level = ? ";
-  const { results } = await c.env.DB.prepare(
+  // 教材过滤：指定了具体版本（非"通用"）时，题目版本需等于该版本或"通用"（不限教材题）
+  const tb = opts.textbookVersion && opts.textbookVersion !== "通用" ? opts.textbookVersion : null;
+  const tbCond = tb ? "AND (textbook_version = ? OR textbook_version = '通用') " : "";
+  let { results } = await c.env.DB.prepare(
     `SELECT * FROM questions
      WHERE subject = ? AND review_status = 'approved'
-       ${gradeCond} AND knowledge_point_id IN (${kpIn})
+       ${gradeCond}${tbCond} AND knowledge_point_id IN (${kpIn})
      ORDER BY difficulty ASC`
   )
     .bind(
       opts.subject,
       ...(opts.gradeLevel === null ? [] : [opts.gradeLevel]),
+      ...(tb ? [tb] : []),
       ...opts.knowledgePointIds
     )
     .all();
-  return pickStratified(results as unknown[], opts.count);
+  // 降级：指定版本但题量不足 count 时，放宽到全部版本（避免出不了卷）
+  const rows = (results ?? []) as unknown[];
+  if (tb && rows.length < opts.count) {
+    const fallback = await c.env.DB.prepare(
+      `SELECT * FROM questions
+       WHERE subject = ? AND review_status = 'approved'
+         ${gradeCond} AND knowledge_point_id IN (${kpIn})
+       ORDER BY difficulty ASC`
+    )
+      .bind(
+        opts.subject,
+        ...(opts.gradeLevel === null ? [] : [opts.gradeLevel]),
+        ...opts.knowledgePointIds
+      )
+      .all();
+    const fbRows = (fallback.results ?? []) as unknown[];
+    // 合并去重（按 id）
+    const seen = new Set(rows.map((r: any) => String(r.id)));
+    for (const r of fbRows) {
+      if (!seen.has(String((r as any).id))) {
+        rows.push(r);
+        seen.add(String((r as any).id));
+      }
+    }
+  }
+  return pickStratified(rows, opts.count);
 }
 
 function pickStratified(rows: unknown[], count: number): unknown[] {

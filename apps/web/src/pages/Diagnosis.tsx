@@ -8,6 +8,7 @@ import {
   type DiagnosisReport,
 } from "../lib/api";
 import { gradeLabel, JUNIOR_GRADES, SENIOR_GRADES } from "../lib/grade";
+import { REGIONS, textbookOfRegion } from "@aiteacher/shared";
 
 type Phase = "config" | "quiz" | "report";
 
@@ -186,6 +187,7 @@ function ReportView({ report, onRestart }: { report: DiagnosisReport; onRestart:
 export default function Diagnosis() {
   const [phase, setPhase] = useState<Phase>("config");
   const [subject, setSubject] = useState("math");
+  const [region, setRegion] = useState(""); // 就读地区（空=不限，默认人教版）
   const [grade, setGrade] = useState(7);
   const [count, setCount] = useState(10);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -201,7 +203,12 @@ export default function Diagnosis() {
     setBusy(true);
     setError("");
     try {
-      const res = await startDiagnosis({ subject, grade, questionCount: count });
+      const res = await startDiagnosis({
+        subject,
+        grade,
+        region: region || undefined,
+        questionCount: count,
+      });
       if (res.questions.length === 0) {
         setError("题库为空，无法组卷。请先在后台导入题目。");
         setBusy(false);
@@ -273,6 +280,41 @@ export default function Diagnosis() {
                 </div>
               </button>
             ))}
+          </div>
+
+          {/* 就读地区（选教材版本用） */}
+          <div className="mt-7">
+            <SectionLabel icon="📍" text="就读地区（匹配教材版本）" />
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                onClick={() => setRegion("")}
+                className={`rounded-xl border px-3 py-2 text-sm font-medium transition-all ${
+                  region === ""
+                    ? "border-brand-400 bg-brand-600 text-white"
+                    : "border-slate-200 text-slate-600 hover:border-brand-200"
+                }`}
+              >
+                不限（通用）
+              </button>
+              {REGIONS.map((r) => (
+                <button
+                  key={r}
+                  onClick={() => setRegion(r)}
+                  className={`rounded-xl border px-3 py-2 text-sm font-medium transition-all ${
+                    region === r
+                      ? "border-brand-400 bg-brand-600 text-white"
+                      : "border-slate-200 text-slate-600 hover:border-brand-200"
+                  }`}
+                >
+                  {r}
+                </button>
+              ))}
+            </div>
+            <p className="mt-2 text-[11px] text-slate-400">
+              {region
+                ? `已匹配教材：${textbookOfRegion(region)}（按该版本优先出题，题量不足时自动放宽）`
+                : "不指定地区时按全国通用（人教版）出题"}
+            </p>
           </div>
 
           <div className="mt-7">

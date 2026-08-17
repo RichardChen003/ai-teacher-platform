@@ -101,13 +101,15 @@ CREATE TABLE IF NOT EXISTS questions (
   options            TEXT,                 -- JSON: [{"key":"A","text":"..."}]
   answer             TEXT NOT NULL,        -- 标准答案
   analysis           TEXT,                 -- 解析/评分标准
-  source             TEXT NOT NULL DEFAULT 'llm',  -- dataset | llm | teacher
+  source             TEXT NOT NULL DEFAULT 'llm',  -- dataset | llm | teacher | template
   review_status      TEXT NOT NULL DEFAULT 'approved',  -- pending | approved | rejected
   tags               TEXT,                 -- JSON 数组
+  textbook_version   TEXT NOT NULL DEFAULT '人教版',  -- 教材版本：人教版 / 北师大版 / 苏教版 / 华师大版 / 湘教版 / 沪教版 / 浙教版 / 通用
   created_at         TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS idx_q_kp   ON questions(knowledge_point_id);
 CREATE INDEX IF NOT EXISTS idx_q_draw ON questions(subject, grade_level, difficulty, review_status);
+CREATE INDEX IF NOT EXISTS idx_q_tb   ON questions(subject, grade_level, textbook_version, review_status);
 
 -- ---------- 测评（入测 / 课后小测） ----------
 CREATE TABLE IF NOT EXISTS assessments (

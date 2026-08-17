@@ -22,6 +22,58 @@ export type QuestionType = (typeof QUESTION_TYPES)[number];
 export type AssessmentKind = (typeof ASSESSMENT_KINDS)[number];
 export type AssetKind = (typeof ASSET_KINDS)[number];
 
+// ---------- 地区 → 教材版本映射 ----------
+// 按省份给出该地区初中主流教材版本；未列出的省份默认"人教版"。
+// 说明：同一省份不同地市/科目可能存在差异，此处取主流值，诊断时可按需放宽。
+export const REGION_TEXTBOOKS: Record<string, string> = {
+  北京: "人教版",
+  天津: "人教版",
+  河北: "人教版",
+  山西: "人教版",
+  内蒙古: "人教版",
+  辽宁: "北师大版",
+  吉林: "人教版",
+  黑龙江: "人教版",
+  上海: "沪教版",
+  江苏: "苏教版",
+  浙江: "浙教版",
+  安徽: "人教版",
+  福建: "人教版",
+  江西: "人教版",
+  山东: "人教版",
+  河南: "人教版",
+  湖北: "人教版",
+  湖南: "湘教版",
+  广东: "人教版",
+  广西: "人教版",
+  海南: "人教版",
+  重庆: "人教版",
+  四川: "北师大版",
+  贵州: "人教版",
+  云南: "人教版",
+  西藏: "人教版",
+  陕西: "北师大版",
+  甘肃: "人教版",
+  青海: "人教版",
+  宁夏: "人教版",
+  新疆: "人教版",
+  台湾: "通用",
+  香港: "通用",
+  澳门: "通用",
+};
+
+export const REGIONS = Object.keys(REGION_TEXTBOOKS);
+
+/** 教材版本集合（含"通用"：不限教材，出题时忽略版本过滤） */
+export const TEXTBOOKS = Array.from(
+  new Set([...Object.values(REGION_TEXTBOOKS), "通用"])
+);
+
+/** 根据地区获取教材版本；未知地区返回"人教版"（全国最普及） */
+export function textbookOfRegion(region: string): string {
+  return REGION_TEXTBOOKS[region] ?? "人教版";
+}
+
 // ---------- 用户 ----------
 export const UserProfileSchema = z.object({
   id: z.string(),
@@ -103,7 +155,8 @@ export type Assessment = z.infer<typeof AssessmentSchema>;
 export const CreateDiagnosisSchema = z.object({
   subject: z.string().min(1),
   grade: z.number().int().min(7).max(18), // 学期粒度：7=初一上 … 18=高三下
-  textbookVersion: z.string().optional(),
+  region: z.string().optional(),          // 就读地区（省/市），用于匹配教材版本
+  textbookVersion: z.string().optional(), // 教材版本（如 人教版）；未传时由 region 推断
   questionCount: z.number().int().min(10).max(30).default(18),
 });
 export type CreateDiagnosisInput = z.infer<typeof CreateDiagnosisSchema>;

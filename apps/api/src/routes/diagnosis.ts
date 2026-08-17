@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { CreateDiagnosisSchema, SubmitAssessmentSchema } from "@aiteacher/shared";
+import { CreateDiagnosisSchema, SubmitAssessmentSchema, textbookOfRegion } from "@aiteacher/shared";
 import { drawQuestions, newId, now } from "../db";
 import { requireUserId } from "./auth";
 import { judgeAnswer, updateMastery, buildReport } from "../lib/mastery";
@@ -8,7 +8,7 @@ import type { Env } from "../env";
 
 /**
  * 入测诊断（模块①）—— MVP 全流程
- *  POST /api/diagnosis          发起入测：智能组卷（分层抽样）
+ *  POST /api/diagnosis          发起入测：智能组卷（分层抽样 + 教材版本过滤）
  *  GET  /api/diagnosis/:id      取试卷（不含答案）
  *  POST /api/diagnosis/:id/submit  交卷 → 客观题自动判分 + 解答题近似判分 → 掌握度更新
  *  GET  /api/diagnosis/:id/report  诊断报告（掌握度聚合 + 规则化建议）
@@ -18,6 +18,13 @@ export const diagnosisRoutes = new Hono<{ Bindings: Env }>()
     const userId = await requireUserId(c);
     if (!userId) return c.json({ ok: false, code: "UNAUTHORIZED", message: "请先登录" }, 401);
     const input = c.req.valid("json");
+    // 教材版本：优先用前端显式传入；否则由就读地区推断（默认人教版）
+    const textbookVersion =
+      input.textbookVersion && input.textbookVersion !== "通用"
+        ? input.textbookVersion
+        : input.region
+          ? textbookOfRegion(input.region)
+          : undefined;
     // 学期粒度：7~12 初中（初一上~初三下），13~18 高中（高一上~高三下）
     const stage = input.grade <= 12 ? "初中" : "高中";
     // 高三（17/18）为总复习阶段：诊断覆盖整个高中内容；其余年级按学期精确匹配
@@ -34,13 +41,14 @@ export const diagnosisRoutes = new Hono<{ Bindings: Env }>()
           .bind(input.subject, stage, input.grade)
           .all();
     const kpIds = (kps.results ?? []).map((r: any) => String(r.id));
-    // 组卷：按知识点分层抽样（题库为空时返回空卷提示）
+    // 组卷：按知识点分层抽样 + 教材版本过滤（题库为空时返回空卷提示）
     const picked = await drawQuestions(c, {
       subject: input.subject,
       gradeLevel: isReview ? null : input.grade,
       stage,
       knowledgePointIds: kpIds.length ? kpIds : [""],
       count: input.questionCount,
+      textbookVersion,
     });
     const questionIds = picked.map((q: any) => String(q.id));
     const id = newId("asm");
