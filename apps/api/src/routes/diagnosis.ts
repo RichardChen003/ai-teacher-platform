@@ -27,8 +27,9 @@ export const diagnosisRoutes = new Hono<{ Bindings: Env }>()
           : undefined;
     // 学期粒度：7~12 初中（初一上~初三下），13~18 高中（高一上~高三下）
     const stage = input.grade <= 12 ? "初中" : "高中";
-    // 高三（17/18）为总复习阶段：诊断覆盖整个高中内容；其余年级按学期精确匹配
-    const isReview = input.grade >= 17;
+    // 毕业班为总复习阶段：初三（11/12）覆盖整个初中、高三（17/18）覆盖整个高中，
+    // 直接复用低年级题库出题，无需为毕业班单独囤题；其余学期按学期精确匹配
+    const isReview = (input.grade >= 11 && input.grade <= 12) || input.grade >= 17;
     const kps = isReview
       ? await c.env.DB.prepare(
           "SELECT id FROM knowledge_points WHERE subject = ? AND stage = ?"
