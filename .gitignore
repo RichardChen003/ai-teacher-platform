@@ -30,3 +30,4 @@ Thumbs.db
 
 # tsc 构建缓存
 *.tsbuildinfo
+scripts/__pycache__/
