@@ -2,34 +2,48 @@ import { useNavigate } from "react-router-dom";
 
 const modes = [
   {
-    key: "all",
-    to: "/classroom/all",
-    title: "全部课程",
-    tag: "全面性",
-    desc: "覆盖各年级、各科目的完整课程库，系统学习每一课",
-    emoji: "📚",
+    key: "full",
+    to: "/classroom/personalized/full",
+    title: "完整教学大纲",
+    tag: "系统全面",
+    desc: "针对完整课程体系的教学大纲，按年级科目系统掌握全部重点知识点",
+    emoji: "📖",
     gradient: "from-brand-500 to-brand-700",
   },
   {
-    key: "personalized",
-    to: "/classroom/personalized",
-    title: "针对课程",
-    tag: "个性化",
-    desc: "基于你的入测诊断与专属大纲，由数字人老师逐课攻克薄弱点",
+    key: "remedial",
+    to: "/classroom/personalized/remedial",
+    title: "补弱提高大纲",
+    tag: "查漏补缺",
+    desc: "基于入测诊断，针对你的薄弱知识点进行针对性强化训练",
     emoji: "🎯",
     gradient: "from-violet-500 to-purple-700",
   },
 ];
 
-export default function Classroom() {
+export default function ClassroomPersonalized() {
   const navigate = useNavigate();
 
   return (
     <div className="space-y-6">
+      <button
+        onClick={() => navigate(-1)}
+        className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-800"
+      >
+        <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+          <path
+            fillRule="evenodd"
+            d="M12.79 5.23a.75.75 0 0 1-.02 1.06L8.832 10l3.938 3.71a.75.75 0 1 1-1.04 1.08l-4.5-4.25a.75.75 0 0 1 0-1.08l4.5-4.25a.75.75 0 0 1 1.06.02Z"
+            clipRule="evenodd"
+          />
+        </svg>
+        返回
+      </button>
+
       <div className="page-head">
         <div>
-          <h1 className="page-title">AI 课堂</h1>
-          <p className="page-sub">选择一种课堂模式，开始你的学习</p>
+          <h1 className="page-title">针对课程</h1>
+          <p className="page-sub">选择一种大纲类型，量身定制你的学习路径</p>
         </div>
       </div>
 

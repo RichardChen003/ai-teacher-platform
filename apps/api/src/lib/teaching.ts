@@ -9,6 +9,7 @@ import type { Env } from "../env";
 import { newId, now } from "../db";
 import { judgeAnswer, updateMastery } from "./mastery";
 import { chatJSON } from "./llm";
+import { renderQualityPptx } from "./qualityDeck";
 
 type Ctx = { env: Env };
 type Kp = { id: string; name: string; code: string | null; curriculum_ref: string | null };
@@ -295,6 +296,9 @@ async function generateDeckWithLLM(c: Ctx, lesson: any, kpName: string): Promise
 // ③ PPTX 渲染（pptxgenjs → ArrayBuffer）
 // ============================================================
 export async function renderPptx(deck: any): Promise<ArrayBuffer> {
+  // 精品课 deck（design === "jingpin"）走增强渲染器（深绿主题 + 图形块），
+  // 详见 qualityDeck.ts；规则版 deck 走下方简易渲染，保持向后兼容。
+  if (deck?.design === "jingpin") return renderQualityPptx(deck);
   const pptx = new PptxGenJS();
   pptx.layout = "LAYOUT_WIDE";
   pptx.author = "AI 老师平台";

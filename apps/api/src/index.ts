@@ -11,6 +11,7 @@ import { syllabusRoutes } from "./routes/syllabus";
 import { lessonsRoutes } from "./routes/lessons";
 import { assetsRoutes } from "./routes/assets";
 import { chatRoutes } from "./routes/chat";
+import { knowledgePptRoutes } from "./routes/knowledge-ppt";
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -34,6 +35,7 @@ app.route("/api", syllabusRoutes);
 app.route("/api", lessonsRoutes);
 app.route("/api", assetsRoutes);
 app.route("/api", chatRoutes);
+app.route("/api", knowledgePptRoutes);
 
 // 全局错误处理：统一 { ok:false, code, message }
 app.onError((err, c) => {
