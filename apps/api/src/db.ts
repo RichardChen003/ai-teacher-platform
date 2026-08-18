@@ -178,12 +178,40 @@ export async function drawQuestions(
   return pickStratified(rows, opts.count);
 }
 
-function pickStratified(rows: unknown[], count: number): unknown[] {
-  // 简化分层：按 difficulty 排序后均匀取 count 个
-  const step = Math.max(1, Math.floor(rows.length / count));
-  const picked: unknown[] = [];
-  for (let i = 0; i < rows.length && picked.length < count; i += step) {
-    picked.push(rows[i]);
+/** Fisher-Yates 随机打乱并取前 n 个 */
+function shuffleTake(arr: unknown[], n: number): unknown[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
-  return picked;
+  return a.slice(0, Math.min(n, a.length));
+}
+
+function pickStratified(rows: unknown[], count: number): unknown[] {
+  // 难度分层：基础 ≤0.45 / 中档 0.45~0.65 / 拔高 >0.65
+  const easy: unknown[] = [], mid: unknown[] = [], hard: unknown[] = [];
+  for (const r of rows) {
+    const d = Number((r as any).difficulty ?? 0.5);
+    if (d <= 0.45) easy.push(r);
+    else if (d <= 0.65) mid.push(r);
+    else hard.push(r);
+  }
+  // 层内随机抽取，配额 40% / 40% / 20%
+  const qEasy = Math.round(count * 0.4);
+  const qMid = Math.round(count * 0.4);
+  const qHard = Math.max(0, count - qEasy - qMid);
+  const picked: unknown[] = [
+    ...shuffleTake(easy, qEasy),
+    ...shuffleTake(mid, qMid),
+    ...shuffleTake(hard, qHard),
+  ];
+  // 某层题量不足时，用剩余题目补齐（随机）
+  if (picked.length < count) {
+    const used = new Set(picked.map((r: any) => String(r.id)));
+    const rest = rows.filter((r) => !used.has(String((r as any).id)));
+    picked.push(...shuffleTake(rest, count - picked.length));
+  }
+  // 最终打乱卷内顺序，保证每次出卷排列也不同
+  return shuffleTake(picked, count);
 }
