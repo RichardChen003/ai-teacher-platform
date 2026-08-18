@@ -160,7 +160,7 @@ export default function SyllabusPage() {
                     <div className="flex shrink-0 items-center gap-2">
                       <span className="badge-slate">~{l.durationMin} 分钟</span>
                       {canStudy && (
-                        <button className="btn-primary px-3.5 py-2 text-xs" onClick={() => navigate(`/classroom?lesson=${l.id}`)}>
+                        <button className="btn-primary px-3.5 py-2 text-xs" onClick={() => navigate(`/classroom/personalized/remedial?lesson=${l.id}`)}>
                           进入课堂
                         </button>
                       )}

@@ -5,6 +5,11 @@ import Dashboard from "./pages/Dashboard";
 import Diagnosis from "./pages/Diagnosis";
 import Syllabus from "./pages/Syllabus";
 import Classroom from "./pages/Classroom";
+import ClassroomAll from "./pages/ClassroomAll";
+import ClassroomPersonalized from "./pages/ClassroomPersonalized";
+import ClassroomFull from "./pages/ClassroomFull";
+import ClassroomRemedial from "./pages/ClassroomRemedial";
+import KnowledgePointDetail from "./pages/KnowledgePointDetail";
 import Profile from "./pages/Profile";
 import { AuthProvider, useAuth } from "./lib/auth";
 
@@ -55,6 +60,11 @@ function AppRoutes() {
         <Route path="/diagnosis" element={<Diagnosis />} />
         <Route path="/syllabus" element={<Syllabus />} />
         <Route path="/classroom" element={<Classroom />} />
+        <Route path="/classroom/all" element={<ClassroomAll />} />
+        <Route path="/classroom/personalized" element={<ClassroomPersonalized />} />
+        <Route path="/classroom/personalized/full" element={<ClassroomFull />} />
+        <Route path="/classroom/personalized/full/:subject/:grade/:index" element={<KnowledgePointDetail />} />
+        <Route path="/classroom/personalized/remedial" element={<ClassroomRemedial />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

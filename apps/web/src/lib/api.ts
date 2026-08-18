@@ -216,6 +216,44 @@ export const getLessonDeck = (lessonId: string) => api<Deck>(`/lessons/${lessonI
 export const generatePpt = (lessonId: string) =>
   api<{ assetId: string; slideCount: number; deck: Deck }>(`/lessons/${lessonId}/ppt`, { method: "POST" });
 
+// ---------- 知识点精品课 PPT ----------
+export type RichBlock =
+  | { type: "text"; content: string; size?: number; color?: string; bold?: boolean; align?: "left" | "center" }
+  | { type: "list"; items: string[] }
+  | { type: "formula"; content: string; note?: string }
+  | { type: "mnemonic"; content: string; title?: string }
+  | { type: "def"; title: string; content: string }
+  | { type: "example"; question: string; solution?: string; tip?: string }
+  | { type: "practice"; question: string; hint?: string }
+  | { type: "steps"; items: string[] }
+  | { type: "table"; header: string[]; rows: string[][] }
+  | { type: "columns"; left: RichBlock[]; right: RichBlock[] }
+  | { type: "balance"; left: string; right: string; caption?: string }
+  | { type: "numberline"; from: number; to: number; marks: Array<{ n: number; label?: string; color?: string }> }
+  | { type: "summary"; points: string[] };
+
+export type RichSlide =
+  | { layout: "cover"; title: string; subtitle?: string; meta?: string[]; notes?: string }
+  | { layout: "divider"; section: string; title?: string; subtitle?: string; notes?: string }
+  | { layout: "content"; section: string; title: string; blocks: RichBlock[]; notes?: string };
+
+export type RichDeck = {
+  design: string;
+  title: string;
+  subject?: string;
+  grade?: string;
+  author?: string;
+  school?: string;
+  slides: RichSlide[];
+};
+
+export function generateKnowledgePpt(input: { subject: string; grade: number; name: string; children?: string[] }) {
+  return api<{ deck: RichDeck; slideCount: number; pptxBase64: string; filename: string }>(
+    "/knowledge-points/ppt",
+    { method: "POST", body: JSON.stringify(input) }
+  );
+}
+
 // ---------- 课后小测 ----------
 export function generateQuiz(lessonId: string) {
   return api<{ assessmentId: string; questions: Question[] }>(`/lessons/${lessonId}/quiz`, { method: "POST" });
