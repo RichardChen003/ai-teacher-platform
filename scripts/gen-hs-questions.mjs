@@ -557,8 +557,37 @@ function main() {
       let qs;
       try { qs = gen ? gen(no) : fallbackQuestion(no, name, ch, meta.name, meta.term, no); }
       catch (e) { console.log('模板错误 知识点', no, name, ':', e.message); qs = fallbackQuestion(no, name, ch, meta.name, meta.term, no); }
-      // 每个知识点 1 题（chunk 单条 INSERT）
-      qs.forEach((q, qi) => { if(!q || !q.analysis || !q.answer || !q.content){ console.log("FAIL_QP no=", no); }
+      // 每个知识点生成 3 个变体（模板参数化 → 随机参数不同内容），按内容去重
+      const variants = [];
+      for (let v = 0; v < 5; v++) {
+        let qs2;
+        try { qs2 = gen ? gen(no) : fallbackQuestion(no, name, ch, meta.name, meta.term, no); }
+        catch (e) { qs2 = fallbackQuestion(no, name, ch, meta.name, meta.term, no); }
+        for (const q of qs2) {
+          if (!q || !q.analysis || !q.answer || !q.content) continue;
+          if (!variants.some((x) => x.content === q.content)) variants.push(q);
+        }
+        if (variants.length >= 3) break;
+      }
+      // 变体不足 3 个时，用选项重排补充（题干相同、选项顺序不同 → 新题）
+      const shuffleOptions = (q) => {
+        let opts = [];
+        try { opts = JSON.parse(q.options || "[]"); } catch { return null; }
+        if (opts.length < 2) return null;
+        const shuffled = [...opts].sort(() => Math.random() - 0.5);
+        const ansText = (opts.find((o) => o.key === q.answer) || {}).text;
+        if (!ansText) return null;
+        const ansKey = (shuffled.find((o) => o.text === ansText) || {}).key;
+        if (!ansKey) return null;
+        return { ...q, options: JSON.stringify(shuffled), answer: ansKey };
+      };
+      for (let v = variants.length; v < 3; v++) {
+        const base = variants[v % Math.max(variants.length, 1)];
+        const sv = base ? shuffleOptions(base) : null;
+        if (!sv) break;
+        if (!variants.some((x) => x.options === sv.options)) variants.push(sv);
+      }
+      variants.slice(0, 3).forEach((q, qi) => {
         const qid = `hq-${String(no).padStart(4, "0")}-${qi + 1}`;
         const opts = q.options ?? "";
         const diff = (0.35 + (no % 5) * 0.1).toFixed(2);

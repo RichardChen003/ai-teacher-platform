@@ -1631,13 +1631,47 @@ def main():
         ]
         per_ch = 0
         for no in range(meta["start"], meta["end"] + 1):
-            q = gen_question(no) or fallback(no)
-            qid = f"jq-{no:04d}-1"
-            opts = q.get("options") or ""
-            diff = (0.35 + (no % 5) * 0.1)
-            lines.append("INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES")
-            lines.append(f"('{qid}','math','初中',{meta['term']},'jkp-{no:04d}','{q['type']}',{diff:.2f},'{q['content'].replace(chr(39), chr(39)+chr(39))}','{opts.replace(chr(39), chr(39)+chr(39))}','{q['answer']}','{q['analysis'].replace(chr(39), chr(39)+chr(39))}','template-j','approved','通用');")
-            per_ch += 1; total += 1
+            # 每知识点生成 3 个变体（参数化随机 → 不同内容），按内容去重
+            variants = []
+            for v in range(5):
+                q = gen_question(no) or fallback(no)
+                if q and not any(x["content"] == q["content"] for x in variants):
+                    variants.append(q)
+                if len(variants) >= 3:
+                    break
+            # 变体不足 3 个时，用选项重排补充（题干相同、选项顺序不同 → 新题）
+            def shuffle_options(q):
+                import json
+                try:
+                    opts = json.loads(q.get("options") or "[]")
+                except Exception:
+                    return None
+                if len(opts) < 2:
+                    return None
+                shuffled = list(opts)
+                random.SystemRandom().shuffle(shuffled)
+                ans_text = next((o["text"] for o in opts if o["key"] == q.get("answer")), None)
+                if ans_text is None:
+                    return None
+                ans_key = next((o["key"] for o in shuffled if o["text"] == ans_text), None)
+                if ans_key is None:
+                    return None
+                return {**q, "options": json.dumps(shuffled, ensure_ascii=False), "answer": ans_key}
+            v = len(variants)
+            while v < 3:
+                base = variants[v % max(len(variants), 1)] if variants else None
+                sv = shuffle_options(base) if base else None
+                if not sv or any(x.get("options") == sv["options"] for x in variants):
+                    break
+                variants.append(sv)
+                v += 1
+            for vi, q in enumerate(variants[:3]):
+                qid = f"jq-{no:04d}-{vi + 1}"
+                opts = q.get("options") or ""
+                diff = (0.35 + (no % 5) * 0.1)
+                lines.append("INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES")
+                lines.append(f"('{qid}','math','初中',{meta['term']},'jkp-{no:04d}','{q['type']}',{diff:.2f},'{q['content'].replace(chr(39), chr(39)+chr(39))}','{opts.replace(chr(39), chr(39)+chr(39))}','{q['answer']}','{q['analysis'].replace(chr(39), chr(39)+chr(39))}','template-j','approved','通用');")
+                per_ch += 1; total += 1
         out = os.path.join(ROOT, "infra", "d1", f"junior-questions-{ch}.sql")
         with open(out, "w", encoding="utf-8") as f:
             f.write("\n".join(lines))
