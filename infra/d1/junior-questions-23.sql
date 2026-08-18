@@ -1,0 +1,22 @@
+-- 第23章 旋转 补题（11学期, 知识点 334-343）
+-- 参数化原创题 source='template-j'
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0334-1','math','初中',11,'jkp-0334','single_choice',0.75,'旋转的三要素是？','[{"key": "A", "text": "旋转中心、旋转方向、旋转角"}, {"key": "B", "text": "旋转中心、旋转半径、旋转角"}, {"key": "C", "text": "旋转方向、旋转速度、旋转角"}, {"key": "D", "text": "旋转中心、对称轴、旋转角"}]','A','旋转三要素','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0335-1','math','初中',11,'jkp-0335','single_choice',0.35,'旋转性质：对应点到旋转中心的距离？','[{"key": "A", "text": "相等"}, {"key": "B", "text": "不相等"}, {"key": "C", "text": "成比例"}, {"key": "D", "text": "无关"}]','A','旋转前后对应点到旋转中心距离相等','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0336-1','math','初中',11,'jkp-0336','single_choice',0.45,'图形绕点 O 旋转 71°，则对应点与 O 连线夹角 = ？','[{"key": "A", "text": "71°"}, {"key": "B", "text": "109°"}, {"key": "C", "text": "19°"}, {"key": "D", "text": "0°"}]','A','旋转角即对应点与中心连线夹角 = 71°','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0337-1','math','初中',11,'jkp-0337','single_choice',0.55,'旋转前后的图形？','[{"key": "A", "text": "全等"}, {"key": "B", "text": "相似但不全等"}, {"key": "C", "text": "面积不同"}, {"key": "D", "text": "大小改变"}]','A','旋转不改变图形，前后全等','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0338-1','math','初中',11,'jkp-0338','single_choice',0.65,'绕某点旋转 180° 后能与自身重合的图形变换叫？','[{"key": "A", "text": "中心对称"}, {"key": "B", "text": "轴对称"}, {"key": "C", "text": "平移"}, {"key": "D", "text": "旋转90°"}]','A','中心对称定义','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0339-1','math','初中',11,'jkp-0339','single_choice',0.75,'中心对称性质：对称点连线经过对称中心且被其？','[{"key": "A", "text": "平分"}, {"key": "B", "text": "垂直"}, {"key": "C", "text": "延长"}, {"key": "D", "text": "相切"}]','A','中心对称：对称点连线过中心且被平分','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0340-1','math','初中',11,'jkp-0340','single_choice',0.35,'下列是中心对称图形的是？','[{"key": "A", "text": "平行四边形"}, {"key": "B", "text": "等边三角形"}, {"key": "C", "text": "正五边形"}, {"key": "D", "text": "角"}]','A','平行四边形绕对角线交点旋转180°重合','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0341-1','math','初中',11,'jkp-0341','single_choice',0.45,'点 (2,4) 绕原点旋转 180°（中心对称）→ ？','[{"key": "A", "text": "(-2,-4)"}, {"key": "B", "text": "(2,-4)"}, {"key": "C", "text": "(-2,4)"}, {"key": "D", "text": "(4,2)"}]','A','关于原点对称：(2,4)→(-2,-4)','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0342-1','math','初中',11,'jkp-0342','single_choice',0.55,'旋转作图的关键是？','[{"key": "A", "text": "确定旋转中心、方向和角度后找对应点"}, {"key": "B", "text": "直接连线"}, {"key": "C", "text": "量角度"}, {"key": "D", "text": "画对称轴"}]','A','旋转作图步骤','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0343-1','math','初中',11,'jkp-0343','single_choice',0.65,'手拉手模型：两个等腰三角形绕公共顶点旋转，常用于证明？','[{"key": "A", "text": "三角形全等/相似"}, {"key": "B", "text": "四边形面积"}, {"key": "C", "text": "圆的性质"}, {"key": "D", "text": "函数图像"}]','A','手拉手模型基础','template-j','approved','通用');

@@ -1,0 +1,24 @@
+-- 第21章 二次根式 补题（11学期, 知识点 310-320）
+-- 参数化原创题 source='template-j'
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0310-1','math','初中',11,'jkp-0310','single_choice',0.35,'下列是二次根式的是？','[{"key": "A", "text": "√3"}, {"key": "B", "text": "³√2"}, {"key": "C", "text": "√-1"}, {"key": "D", "text": "2"}]','A','二次根式：√a(a≥0)','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0311-1','math','初中',11,'jkp-0311','single_choice',0.45,'√(x-4) 有意义的条件是？','[{"key": "A", "text": "x ≥ 4"}, {"key": "B", "text": "x > 4"}, {"key": "C", "text": "x ≤ 4"}, {"key": "D", "text": "x ≠ 4"}]','A','被开方数非负：x-4≥0 → x≥4','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0312-1','math','初中',11,'jkp-0312','single_choice',0.55,'(√2)² = ？','[{"key": "A", "text": "2"}, {"key": "B", "text": "4"}, {"key": "C", "text": "1"}, {"key": "D", "text": "-2"}]','A','(√a)²=a=2','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0313-1','math','初中',11,'jkp-0313','single_choice',0.65,'√(25) = ？','[{"key": "A", "text": "5"}, {"key": "B", "text": "-5"}, {"key": "C", "text": "25"}, {"key": "D", "text": "±5"}]','A','√(a²)=|a|=5','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0314-1','math','初中',11,'jkp-0314','single_choice',0.75,'√4 × √4 = ？','[{"key": "A", "text": "4"}, {"key": "B", "text": "4"}, {"key": "C", "text": "16"}, {"key": "D", "text": "8"}]','A','√a×√b=√(ab)=2×2=4','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0315-1','math','初中',11,'jkp-0315','single_choice',0.35,'√256 ÷ √16 = ？','[{"key": "A", "text": "4"}, {"key": "B", "text": "16"}, {"key": "C", "text": "4"}, {"key": "D", "text": "8"}]','A','√256=16，÷4=4','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0316-1','math','初中',11,'jkp-0316','single_choice',0.45,'最简二次根式的要求是？','[{"key": "A", "text": "被开方数不含分母和开得尽的因数"}, {"key": "B", "text": "被开方数含分母"}, {"key": "C", "text": "被开方数是分数"}, {"key": "D", "text": "系数是分数"}]','A','最简二次根式：被开方数不含分母、不含能开得尽的因数','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0317-1','math','初中',11,'jkp-0317','single_choice',0.55,'化简 √(16×2) = ？','[{"key": "A", "text": "4√2"}, {"key": "B", "text": "16√2"}, {"key": "C", "text": "√32"}, {"key": "D", "text": "8"}]','A','√(16×2)=4√2','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0318-1','math','初中',11,'jkp-0318','single_choice',0.65,'√32 与 √2 是同类二次根式吗？','[{"key": "A", "text": "是"}, {"key": "B", "text": "否"}, {"key": "C", "text": "无法判断"}, {"key": "D", "text": "不一定"}]','A','√32=4√2，与 √2 是同类','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0319-1','math','初中',11,'jkp-0319','single_choice',0.75,'√32 + √32 = ？','[{"key": "A", "text": "(4+4)√2"}, {"key": "B", "text": "8√2"}, {"key": "C", "text": "16√2"}, {"key": "D", "text": "(4×4)√2"}]','A','√32=4√2，√32=4√2，和=(4+4)√2','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0320-1','math','初中',11,'jkp-0320','single_choice',0.35,'化简 1/√9 = ？','[{"key": "A", "text": "1/3"}, {"key": "B", "text": "3"}, {"key": "C", "text": "√9"}, {"key": "D", "text": "-1/3"}]','A','1/√9=1/3（分母有理化）','template-j','approved','通用');

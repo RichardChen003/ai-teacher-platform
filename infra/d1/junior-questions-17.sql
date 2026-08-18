@@ -1,0 +1,20 @@
+-- 第17章 反比例函数 补题（10学期, 知识点 259-267）
+-- 参数化原创题 source='template-j'
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0259-1','math','初中',10,'jkp-0259','single_choice',0.75,'y = 2/x (k≠0) 是？函数','[{"key": "A", "text": "反比例函数"}, {"key": "B", "text": "正比例函数"}, {"key": "C", "text": "一次函数"}, {"key": "D", "text": "二次函数"}]','A','y=k/x 是反比例函数','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0260-1','math','初中',10,'jkp-0260','single_choice',0.35,'反比例函数 y = k/x 的自变量 x 的取值范围是？','[{"key": "A", "text": "x ≠ 0"}, {"key": "B", "text": "x > 0"}, {"key": "C", "text": "x < 0"}, {"key": "D", "text": "x 任意"}]','A','分母不为 0：x≠0','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0261-1','math','初中',10,'jkp-0261','single_choice',0.45,'反比例函数 y = k/x 的图像是？','[{"key": "A", "text": "双曲线"}, {"key": "B", "text": "直线"}, {"key": "C", "text": "抛物线"}, {"key": "D", "text": "圆"}]','A','反比例函数图像：双曲线','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0262-1','math','初中',10,'jkp-0262','single_choice',0.55,'反比例函数 y = 2/x (k>0)，y 随 x 增大而？','[{"key": "A", "text": "减小（每个象限内）"}, {"key": "B", "text": "增大"}, {"key": "C", "text": "不变"}, {"key": "D", "text": "先增后减"}]','A','k=2>0：图像在一、三象限，每个象限 y 随 x 增大而减小','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0263-1','math','初中',10,'jkp-0263','single_choice',0.65,'反比例函数 y = -4/x (k<0)，图像在？象限','[{"key": "A", "text": "二、四"}, {"key": "B", "text": "一、三"}, {"key": "C", "text": "一、二"}, {"key": "D", "text": "三、四"}]','A','k<0 → 二、四象限','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0264-1','math','初中',10,'jkp-0264','single_choice',0.75,'反比例函数 y=5/x 图像上一点向坐标轴作垂线，与坐标轴围成矩形面积 = ？','[{"key": "A", "text": "5"}, {"key": "B", "text": "10"}, {"key": "C", "text": "2.5"}, {"key": "D", "text": "25"}]','A','k 的几何意义：矩形面积 = |k| = 5','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0265-1','math','初中',10,'jkp-0265','single_choice',0.35,'反比例函数过点 (3, 0)，用待定系数法 k = x·y = ？','[{"key": "A", "text": "2"}, {"key": "B", "text": "6"}, {"key": "C", "text": "0"}, {"key": "D", "text": "3"}]','A','k=xy=3×0=2','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0266-1','math','初中',10,'jkp-0266','single_choice',0.45,'一次函数与反比例函数图像的交点即？的解','[{"key": "A", "text": "联立方程组"}, {"key": "B", "text": "一元一次方程"}, {"key": "C", "text": "一元二次方程"}, {"key": "D", "text": "不等式"}]','A','交点：联立两函数解析式求解','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0267-1','math','初中',10,'jkp-0267','single_choice',0.55,'面积 2 的矩形，长 x 宽 y，则 y = ？(x>0)','[{"key": "A", "text": "2/x"}, {"key": "B", "text": "x/2"}, {"key": "C", "text": "2x"}, {"key": "D", "text": "2-x"}]','A','反比例应用：xy=2 → y=2/x','template-j','approved','通用');

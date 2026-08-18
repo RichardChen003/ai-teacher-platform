@@ -1,0 +1,26 @@
+-- 第10章 数据的收集、整理与描述 补题（8学期, 知识点 146-157）
+-- 参数化原创题 source='template-j'
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0146-1','math','初中',8,'jkp-0146','single_choice',0.45,'调查全班同学视力适合用？','[{"key": "A", "text": "全面调查（普查）"}, {"key": "B", "text": "抽样调查"}, {"key": "C", "text": "估算"}, {"key": "D", "text": "实验"}]','A','范围小、要精确 → 普查','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0147-1','math','初中',8,'jkp-0147','single_choice',0.55,'调查全国中学生身高适合用？','[{"key": "A", "text": "抽样调查"}, {"key": "B", "text": "全面调查"}, {"key": "C", "text": "普查"}, {"key": "D", "text": "逐个检查"}]','A','范围大 → 抽样调查','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0148-1','math','初中',8,'jkp-0148','single_choice',0.65,'被调查的所有对象构成？','[{"key": "A", "text": "总体"}, {"key": "B", "text": "样本"}, {"key": "C", "text": "个体"}, {"key": "D", "text": "样本容量"}]','A','总体：全体对象','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0149-1','math','初中',8,'jkp-0149','single_choice',0.75,'每个个体被抽中的机会均等的抽样是？','[{"key": "A", "text": "简单随机抽样"}, {"key": "B", "text": "方便抽样"}, {"key": "C", "text": "主观抽样"}, {"key": "D", "text": "分组抽样"}]','A','简单随机抽样定义','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0150-1','math','初中',8,'jkp-0150','single_choice',0.35,'用等宽矩形高度表示频数的图是？','[{"key": "A", "text": "条形统计图"}, {"key": "B", "text": "折线统计图"}, {"key": "C", "text": "扇形统计图"}, {"key": "D", "text": "直方图"}]','A','条形图用高度表示数量','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0151-1','math','初中',8,'jkp-0151','single_choice',0.45,'反映数据变化趋势的图是？','[{"key": "A", "text": "折线统计图"}, {"key": "B", "text": "条形统计图"}, {"key": "C", "text": "扇形统计图"}, {"key": "D", "text": "直方图"}]','A','折线图反映趋势','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0152-1','math','初中',8,'jkp-0152','single_choice',0.55,'扇形统计图中，占总数 54% 的扇形的圆心角 = ？','[{"key": "A", "text": "194.4°"}, {"key": "B", "text": "54°"}, {"key": "C", "text": "540°"}, {"key": "D", "text": "306°"}]','A','圆心角 = 54% × 360° = 194.4°','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0153-1','math','初中',8,'jkp-0153','single_choice',0.65,'数据总数 26，某组频数 8，频率 = ？','[{"key": "A", "text": "0.3076923076923077"}, {"key": "B", "text": "3.25"}, {"key": "C", "text": "8"}, {"key": "D", "text": "26"}]','A','频率 = 频数/总数 = 8/26 = 0.3076923076923077','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0154-1','math','初中',8,'jkp-0154','single_choice',0.75,'直方图中，每个小矩形的宽表示？','[{"key": "A", "text": "组距"}, {"key": "B", "text": "组数"}, {"key": "C", "text": "频数"}, {"key": "D", "text": "频率"}]','A','矩形宽 = 组距','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0155-1','math','初中',8,'jkp-0155','single_choice',0.35,'将数据分组后，各组频数的总和等于？','[{"key": "A", "text": "数据总数"}, {"key": "B", "text": "组数"}, {"key": "C", "text": "组距"}, {"key": "D", "text": "1"}]','A','各频数之和 = 总数','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0156-1','math','初中',8,'jkp-0156','single_choice',0.45,'频数分布直方图中，小矩形面积表示？','[{"key": "A", "text": "频数"}, {"key": "B", "text": "频率"}, {"key": "C", "text": "组距"}, {"key": "D", "text": "数据值"}]','A','直方图面积（高=频数）','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0157-1','math','初中',8,'jkp-0157','single_choice',0.55,'取每组组中值，连成折线 → ？','[{"key": "A", "text": "频数分布折线图"}, {"key": "B", "text": "条形图"}, {"key": "C", "text": "扇形图"}, {"key": "D", "text": "散点图"}]','A','频数分布折线图','template-j','approved','通用');

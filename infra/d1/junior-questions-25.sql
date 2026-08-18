@@ -1,0 +1,16 @@
+-- 第25章 概率初步 补题（11学期, 知识点 368-374）
+-- 参数化原创题 source='template-j'
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0368-1','math','初中',11,'jkp-0368','single_choice',0.65,'明天会下雨是？事件','[{"key": "A", "text": "随机事件"}, {"key": "B", "text": "必然事件"}, {"key": "C", "text": "不可能事件"}, {"key": "D", "text": "确定事件"}]','A','随机事件：可能发生也可能不发生','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0369-1','math','初中',11,'jkp-0369','single_choice',0.75,'概率的取值范围是？','[{"key": "A", "text": "0 ≤ P ≤ 1"}, {"key": "B", "text": "0 < P < 1"}, {"key": "C", "text": "P ≥ 1"}, {"key": "D", "text": "P ≤ 0"}]','A','概率范围 0~1','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0370-1','math','初中',11,'jkp-0370','single_choice',0.35,'掷一个骰子，点数为偶数的概率 = ？','[{"key": "A", "text": "1/2"}, {"key": "B", "text": "4/6"}, {"key": "C", "text": "1/6"}, {"key": "D", "text": "2/3"}]','A','偶数 3 个：3/6=1/2','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0371-1','math','初中',11,'jkp-0371','single_choice',0.45,'从 1~5 中任取一个数，取到 3 的概率 = ？','[{"key": "A", "text": "1/5"}, {"key": "B", "text": "3/5"}, {"key": "C", "text": "1/3"}, {"key": "D", "text": "1/2"}]','A','等可能：1/5','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0372-1','math','初中',11,'jkp-0372','single_choice',0.55,'掷两枚骰子，求点数和的概率常用？','[{"key": "A", "text": "列表法"}, {"key": "B", "text": "直接猜"}, {"key": "C", "text": "画图"}, {"key": "D", "text": "测量"}]','A','两步概率 → 列表法','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0373-1','math','初中',11,'jkp-0373','single_choice',0.65,'三步以上（或多次抽取）求概率常用？','[{"key": "A", "text": "树状图法"}, {"key": "B", "text": "列表法"}, {"key": "C", "text": "枚举法"}, {"key": "D", "text": "估算法"}]','A','多步概率 → 树状图','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0374-1','math','初中',11,'jkp-0374','single_choice',0.75,'大量重复试验中，某事件频率趋近于？','[{"key": "A", "text": "概率"}, {"key": "B", "text": "0"}, {"key": "C", "text": "1"}, {"key": "D", "text": "试验次数"}]','A','频率估计概率','template-j','approved','通用');

@@ -1,0 +1,22 @@
+-- 第20章 数据的分析 补题（10学期, 知识点 300-309）
+-- 参数化原创题 source='template-j'
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0300-1','math','初中',10,'jkp-0300','single_choice',0.35,'数据 5、3、6 的平均数 = ？','[{"key": "A", "text": "4.666666666666667"}, {"key": "B", "text": "14"}, {"key": "C", "text": "4"}, {"key": "D", "text": "5"}]','A','平均数=(5+3+6)/3=4.666666666666667','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0301-1','math','初中',10,'jkp-0301','single_choice',0.45,'加权平均数中，权表示？','[{"key": "A", "text": "各数据的重要程度/占比"}, {"key": "B", "text": "数据个数"}, {"key": "C", "text": "数据最大值"}, {"key": "D", "text": "数据最小值"}]','A','权：重要性/频率','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0302-1','math','初中',10,'jkp-0302','single_choice',0.55,'数据 1、3、3、5、7 的中位数是？','[{"key": "A", "text": "3"}, {"key": "B", "text": "3.8"}, {"key": "C", "text": "5"}, {"key": "D", "text": "1"}]','A','排序后中间位置（第3个）→ 3','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0303-1','math','初中',10,'jkp-0303','single_choice',0.65,'数据 1、2、2、3、3、4 的众数是？','[{"key": "A", "text": "2 和 3"}, {"key": "B", "text": "2"}, {"key": "C", "text": "3"}, {"key": "D", "text": "4"}]','A','出现次数最多的：2 和 3（可多个众数）','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0304-1','math','初中',10,'jkp-0304','single_choice',0.75,'受极端值影响最大的是？','[{"key": "A", "text": "平均数"}, {"key": "B", "text": "中位数"}, {"key": "C", "text": "众数"}, {"key": "D", "text": "都不受"}]','A','平均数受极端值影响大','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0305-1','math','初中',10,'jkp-0305','single_choice',0.35,'数据 3、7、9、15 的极差 = ？','[{"key": "A", "text": "12"}, {"key": "B", "text": "9"}, {"key": "C", "text": "15"}, {"key": "D", "text": "6"}]','A','极差=最大值-最小值=15-3=12','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0306-1','math','初中',10,'jkp-0306','single_choice',0.45,'数据 2、4、6 的方差 = ？','[{"key": "A", "text": "8/3"}, {"key": "B", "text": "4"}, {"key": "C", "text": "2"}, {"key": "D", "text": "16/3"}]','A','平均4，方差=[(2-4)²+(4-4)²+(6-4)²]/3=8/3','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0307-1','math','初中',10,'jkp-0307','single_choice',0.55,'方差越大，说明数据波动？','[{"key": "A", "text": "越大"}, {"key": "B", "text": "越小"}, {"key": "C", "text": "不变"}, {"key": "D", "text": "无法判断"}]','A','方差意义：方差越大波动越大','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0308-1','math','初中',10,'jkp-0308','single_choice',0.65,'标准差是方差的？','[{"key": "A", "text": "算术平方根"}, {"key": "B", "text": "平方"}, {"key": "C", "text": "2 倍"}, {"key": "D", "text": "一半"}]','A','标准差 = √方差','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0309-1','math','初中',10,'jkp-0309','single_choice',0.75,'用样本估计总体：样本平均数和方差可估计？','[{"key": "A", "text": "总体的平均数和方差"}, {"key": "B", "text": "总体的最大值"}, {"key": "C", "text": "总体的个数"}, {"key": "D", "text": "总体分布精确值"}]','A','样本估计总体思想','template-j','approved','通用');

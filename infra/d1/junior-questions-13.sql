@@ -1,0 +1,30 @@
+-- 第13章 实数 补题（9学期, 知识点 187-200）
+-- 参数化原创题 source='template-j'
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0187-1','math','初中',9,'jkp-0187','single_choice',0.55,'√81 = ？','[{"key": "A", "text": "9"}, {"key": "B", "text": "-9"}, {"key": "C", "text": "±9"}, {"key": "D", "text": "81"}]','A','算术平方根取正：√81=9','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0188-1','math','初中',9,'jkp-0188','single_choice',0.65,'√a 有意义的条件是？','[{"key": "A", "text": "a ≥ 0"}, {"key": "B", "text": "a > 0"}, {"key": "C", "text": "a ≤ 0"}, {"key": "D", "text": "a ≠ 0"}]','A','算术平方根被开方数非负','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0189-1','math','初中',9,'jkp-0189','single_choice',0.75,'49 的平方根是？','[{"key": "A", "text": "±7"}, {"key": "B", "text": "7"}, {"key": "C", "text": "-7"}, {"key": "D", "text": "49"}]','A','平方根有两个：±7','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0190-1','math','初中',9,'jkp-0190','single_choice',0.35,'下列说法正确的是？','[{"key": "A", "text": "正数有两个平方根（互为相反数）"}, {"key": "B", "text": "负数有平方根"}, {"key": "C", "text": "0 没有平方根"}, {"key": "D", "text": "正数只有一个平方根"}]','A','平方根性质：正数 2 个、0 一个、负数无','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0191-1','math','初中',9,'jkp-0191','single_choice',0.45,'开平方：√(25) = ？','[{"key": "A", "text": "5"}, {"key": "B", "text": "-5"}, {"key": "C", "text": "25"}, {"key": "D", "text": "±5"}]','A','√(25)=5','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0192-1','math','初中',9,'jkp-0192','single_choice',0.55,'³√(64) = ？','[{"key": "A", "text": "4"}, {"key": "B", "text": "-4"}, {"key": "C", "text": "64"}, {"key": "D", "text": "±4"}]','A','立方根：³√(64)=4','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0193-1','math','初中',9,'jkp-0193','single_choice',0.65,'³√(-27) = ？','[{"key": "A", "text": "-3"}, {"key": "B", "text": "3"}, {"key": "C", "text": "27"}, {"key": "D", "text": "无意义"}]','A','负数可开立方：³√(-27)=-3','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0194-1','math','初中',9,'jkp-0194','single_choice',0.75,'开立方：³√(8) = ？','[{"key": "A", "text": "2"}, {"key": "B", "text": "8"}, {"key": "C", "text": "-2"}, {"key": "D", "text": "±2"}]','A','³√(8)=2','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0195-1','math','初中',9,'jkp-0195','single_choice',0.35,'下列是无理数的是？','[{"key": "A", "text": "√2"}, {"key": "B", "text": "1/3"}, {"key": "C", "text": "0.5"}, {"key": "D", "text": "-4"}]','A','√2 无限不循环 → 无理数','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0196-1','math','初中',9,'jkp-0196','single_choice',0.45,'有理数和无理数统称为？','[{"key": "A", "text": "实数"}, {"key": "B", "text": "整数"}, {"key": "C", "text": "分数"}, {"key": "D", "text": "自然数"}]','A','实数 = 有理数 + 无理数','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0197-1','math','初中',9,'jkp-0197','single_choice',0.55,'实数与数轴上的点？','[{"key": "A", "text": "一一对应"}, {"key": "B", "text": "无对应"}, {"key": "C", "text": "部分对应"}, {"key": "D", "text": "二一对应"}]','A','实数与数轴上的点一一对应','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0198-1','math','初中',9,'jkp-0198','single_choice',0.65,'√4 的相反数是？','[{"key": "A", "text": "-2"}, {"key": "B", "text": "2"}, {"key": "C", "text": "0"}, {"key": "D", "text": "4"}]','A','√4=2，相反数 -2','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0199-1','math','初中',9,'jkp-0199','single_choice',0.75,'比较 √2 与 1.5 的大小？','[{"key": "A", "text": "√2 < 1.5"}, {"key": "B", "text": "√2 > 1.5"}, {"key": "C", "text": "相等"}, {"key": "D", "text": "无法比较"}]','A','√2≈1.414 < 1.5','template-j','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('jq-0200-1','math','初中',9,'jkp-0200','single_choice',0.35,'计算：√16 + ³√64 = ？','[{"key": "A", "text": "20"}, {"key": "B", "text": "80"}, {"key": "C", "text": "8"}, {"key": "D", "text": "32"}]','A','√16=4，³√64=16，和=20','template-j','approved','通用');
