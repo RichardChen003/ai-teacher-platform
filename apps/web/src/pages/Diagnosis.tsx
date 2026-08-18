@@ -8,7 +8,7 @@ import {
   type DiagnosisReport,
 } from "../lib/api";
 import { gradeLabel, JUNIOR_GRADES, SENIOR_GRADES } from "../lib/grade";
-import { REGIONS, textbookOfRegion } from "@aiteacher/shared";
+import { REGIONS, REGION_CITIES, textbookOfRegion, splitRegion } from "@aiteacher/shared";
 
 type Phase = "config" | "quiz" | "report";
 
@@ -282,33 +282,51 @@ export default function Diagnosis() {
             ))}
           </div>
 
-          {/* 就读地区（选教材版本用） */}
+          {/* 就读地区（省→市 两级下拉，中考为市一级考核） */}
           <div className="mt-7">
             <SectionLabel icon="📍" text="就读地区（匹配教材版本）" />
-            <div className="mt-3 flex flex-wrap gap-2">
-              <button
-                onClick={() => setRegion("")}
-                className={`rounded-xl border px-3 py-2 text-sm font-medium transition-all ${
-                  region === ""
-                    ? "border-brand-400 bg-brand-600 text-white"
-                    : "border-slate-200 text-slate-600 hover:border-brand-200"
-                }`}
-              >
-                不限（通用）
-              </button>
-              {REGIONS.map((r) => (
-                <button
-                  key={r}
-                  onClick={() => setRegion(r)}
-                  className={`rounded-xl border px-3 py-2 text-sm font-medium transition-all ${
-                    region === r
-                      ? "border-brand-400 bg-brand-600 text-white"
-                      : "border-slate-200 text-slate-600 hover:border-brand-200"
-                  }`}
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              {/* 省份下拉 */}
+              <div>
+                <label className="mb-1 block text-xs font-medium text-slate-400">省份</label>
+                <select
+                  className="input"
+                  value={splitRegion(region).province}
+                  onChange={(e) => {
+                    const p = e.target.value;
+                    if (!p) { setRegion(""); return; }
+                    // 选中省份：默认选该省第一个城市（若为直辖市则直接省名）
+                    const city = REGION_CITIES[p]?.[0] ?? "";
+                    setRegion(city ? `${p}-${city}` : p);
+                  }}
                 >
-                  {r}
-                </button>
-              ))}
+                  <option value="">不限（通用）</option>
+                  {REGIONS.map((p) => (
+                    <option key={p} value={p}>{p}</option>
+                  ))}
+                </select>
+              </div>
+              {/* 城市下拉（依赖省份） */}
+              <div>
+                <label className="mb-1 block text-xs font-medium text-slate-400">城市</label>
+                <select
+                  className="input"
+                  disabled={!splitRegion(region).province}
+                  value={splitRegion(region).city}
+                  onChange={(e) => {
+                    const city = e.target.value;
+                    const prov = splitRegion(region).province;
+                    setRegion(city ? `${prov}-${city}` : prov);
+                  }}
+                >
+                  {splitRegion(region).province && (
+                    <option value="">仅省（不分城市）</option>
+                  )}
+                  {(REGION_CITIES[splitRegion(region).province] ?? []).map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
             </div>
             <p className="mt-2 text-[11px] text-slate-400">
               {region
