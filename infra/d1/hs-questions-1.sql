@@ -1,0 +1,32 @@
+-- ============================================================
+-- 第1章 集合与常用逻辑用语 补题（13学期, 知识点 1-14）
+-- 参数化原创题 source='template-hs'
+-- ============================================================
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0001-1','math','高中',13,'hs-kp-0001','single_choice',0.45,'下列集合表示正确的是？','[{"key":"A","text":"所有偶数：{x | x=2k, k∈Z}"},{"key":"B","text":"较大的数"},{"key":"C","text":"接近0的数"},{"key":"D","text":"成绩好的同学"}]','A','集合中的元素必须确定，A 用性质描述确定了偶数集合；其余选项元素不确定','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0002-1','math','高中',13,'hs-kp-0002','single_choice',0.55,'集合 {1,2,...,4} 的子集个数是？','[{"key":"A","text":"16"},{"key":"B","text":"4"},{"key":"C","text":"15"},{"key":"D","text":"8"}]','A','含 4 个元素的集合子集数为 2^4=16','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0003-1','math','高中',13,'hs-kp-0003','single_choice',0.65,'若 A⊆B 且 B⊆A，则 A 与 B 的关系是？','[{"key":"A","text":"A=B"},{"key":"B","text":"A⊂B"},{"key":"C","text":"A∩B=∅"},{"key":"D","text":"A∪B=A"}]','A','集合相等：两个集合互相包含则相等','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0004-1','math','高中',13,'hs-kp-0004','single_choice',0.75,'已知 A={6,13}，B={3,17}，则 A∪B = ？','[{"key":"A","text":"{6,13,3,17}"},{"key":"B","text":"∅"},{"key":"C","text":"{6,13}"},{"key":"D","text":"{3,17}"}]','A','并集取两集合所有元素','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0005-1','math','高中',13,'hs-kp-0005','single_choice',0.35,'命题"∀x∈R，x²≥0"的否定是？','[{"key":"A","text":"∃x∈R，x²<0"},{"key":"B","text":"∀x∈R，x²<0"},{"key":"C","text":"∃x∈R，x²≥0"},{"key":"D","text":"∀x∈R，x²≠0"}]','A','全称量词命题的否定是存在量词命题，结论取反','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0006-1','math','高中',13,'hs-kp-0006','single_choice',0.45,'若 p 是 q 的充分条件，则以下正确的是？','[{"key":"A","text":"p⇒q"},{"key":"B","text":"q⇒p"},{"key":"C","text":"p⇔q"},{"key":"D","text":"p 与 q 无关"}]','A','p 是 q 的充分条件即 p⇒q（p 能推出 q）','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0007-1','math','高中',13,'hs-kp-0007','single_choice',0.55,'集合 A={x∈N | x<4} 用列举法表示为？','[{"key":"A","text":"{0,1,2,...,3}"},{"key":"B","text":"{1,2,...,4}"},{"key":"C","text":"{0,1,...,4}"},{"key":"D","text":"{1,2,...,3}"}]','A','自然数中小于 4 的是 0 到 3','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0008-1','math','高中',13,'hs-kp-0008','single_choice',0.65,'若 1∈A 且 A={8, x}，则 x = ？','[{"key":"A","text":"1"},{"key":"B","text":"8"},{"key":"C","text":"0"},{"key":"D","text":"2"}]','A','元素属于集合，则元素在集合中，故 x=1','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0009-1','math','高中',13,'hs-kp-0009','single_choice',0.75,'空集 ∅ 与集合 {0} 的关系是？','[{"key":"A","text":"∅⊂{0}"},{"key":"B","text":"∅∈{0}"},{"key":"C","text":"∅={0}"},{"key":"D","text":"∅ 不是 {0} 的子集"}]','A','空集是任何非空集合的真子集','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0010-1','math','高中',13,'hs-kp-0010','single_choice',0.35,'设全集 U={5,10,11,12}，A={5}，则 ∁UA = ？','[{"key":"A","text":"{10,11,12}"},{"key":"B","text":"{5,10}"},{"key":"C","text":"{5,11,12}"},{"key":"D","text":"∅"}]','A','补集为全集中不属于 A 的元素','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0011-1','math','高中',13,'hs-kp-0011','single_choice',0.45,'"x>2" 是 "x>1" 的什么条件？','[{"key":"A","text":"充分不必要"},{"key":"B","text":"必要不充分"},{"key":"C","text":"充要"},{"key":"D","text":"既不充分也不必要"}]','A','x>2 能推出 x>1，但反之不成立，故充分不必要','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0012-1','math','高中',13,'hs-kp-0012','single_choice',0.55,'下列是全称量词命题的是？','[{"key":"A","text":"∀x∈R，x²+1>0"},{"key":"B","text":"∃x∈R，x=1"},{"key":"C","text":"x 是奇数"},{"key":"D","text":"有些三角形是等边的"}]','A','∀ 是全称量词，A 为全称量词命题','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0013-1','math','高中',13,'hs-kp-0013','single_choice',0.65,'下列是存在量词命题的是？','[{"key":"A","text":"∃x∈R，x²=1"},{"key":"B","text":"∀x∈R，x²≥0"},{"key":"C","text":"所有正方形都是菱形"},{"key":"D","text":"三角形内角和为180°"}]','A','∃ 是存在量词，A 为存在量词命题','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0014-1','math','高中',13,'hs-kp-0014','single_choice',0.75,'命题''若 x=1，则 x²=1''的真假是？','[{"key":"A","text":"真命题"},{"key":"B","text":"假命题"},{"key":"C","text":"无法判断"},{"key":"D","text":"既真又假"}]','A','x=1 时 x²=1 恒成立，是真命题','template-hs','approved','通用');

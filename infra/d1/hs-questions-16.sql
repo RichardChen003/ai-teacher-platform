@@ -1,0 +1,28 @@
+-- ============================================================
+-- 第16章 计数原理 补题（16学期, 知识点 213-224）
+-- 参数化原创题 source='template-hs'
+-- ============================================================
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0213-1','math','高中',16,'hs-kp-0213','single_choice',0.65,'下列对「分类加法计数原理」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','分类加法计数原理是计数原理（第16章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0214-1','math','高中',16,'hs-kp-0214','single_choice',0.75,'下列对「分步乘法计数原理」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','分步乘法计数原理是计数原理（第16章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0215-1','math','高中',16,'hs-kp-0215','single_choice',0.35,'下列对「排列数公式与运算」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','排列数公式与运算是计数原理（第16章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0216-1','math','高中',16,'hs-kp-0216','single_choice',0.45,'下列对「组合数公式与运算」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','组合数公式与运算是计数原理（第16章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0217-1','math','高中',16,'hs-kp-0217','single_choice',0.55,'下列对「组合数核心性质」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','组合数核心性质是计数原理（第16章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0218-1','math','高中',16,'hs-kp-0218','single_choice',0.65,'下列对「有限制条件排列问题」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','有限制条件排列问题是计数原理（第16章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0219-1','math','高中',16,'hs-kp-0219','single_choice',0.75,'下列对「有限制条件组合问题」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','有限制条件组合问题是计数原理（第16章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0220-1','math','高中',16,'hs-kp-0220','single_choice',0.35,'下列对「捆绑、插空、隔板模型」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','捆绑、插空、隔板模型是计数原理（第16章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0221-1','math','高中',16,'hs-kp-0221','single_choice',0.45,'下列对「二项式定理展开式」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','二项式定理展开式是计数原理（第16章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0222-1','math','高中',16,'hs-kp-0222','single_choice',0.55,'下列对「二项式通项公式」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','二项式通项公式是计数原理（第16章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0223-1','math','高中',16,'hs-kp-0223','single_choice',0.65,'下列对「二项式系数性质」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','二项式系数性质是计数原理（第16章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0224-1','math','高中',16,'hs-kp-0224','single_choice',0.75,'下列对「二项式系数求和」的理解正确的是？','[{"key":"A","text":"它属于计数原理的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','二项式系数求和是计数原理（第16章）的正式知识点','template-hs','approved','通用');

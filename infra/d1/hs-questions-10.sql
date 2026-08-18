@@ -1,0 +1,28 @@
+-- ============================================================
+-- 第10章 概率 补题（14学期, 知识点 127-138）
+-- 参数化原创题 source='template-hs'
+-- ============================================================
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0127-1','math','高中',14,'hs-kp-0127','single_choice',0.55,'下列对「古典概型计算」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','古典概型计算是概率（第10章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0128-1','math','高中',14,'hs-kp-0128','single_choice',0.65,'下列对「互斥事件概率」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','互斥事件概率是概率（第10章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0129-1','math','高中',14,'hs-kp-0129','single_choice',0.75,'下列对「对立事件概率」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','对立事件概率是概率（第10章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0130-1','math','高中',14,'hs-kp-0130','single_choice',0.35,'下列对「相互独立事件定义」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','相互独立事件定义是概率（第10章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0131-1','math','高中',14,'hs-kp-0131','single_choice',0.45,'下列对「独立事件乘法公式」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','独立事件乘法公式是概率（第10章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0132-1','math','高中',14,'hs-kp-0132','single_choice',0.55,'下列对「随机事件关系判断」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','随机事件关系判断是概率（第10章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0133-1','math','高中',14,'hs-kp-0133','single_choice',0.65,'下列对「概率基本性质」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','概率基本性质是概率（第10章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0134-1','math','高中',14,'hs-kp-0134','single_choice',0.75,'下列对「有限样本空间」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','有限样本空间是概率（第10章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0135-1','math','高中',14,'hs-kp-0135','single_choice',0.35,'下列对「频率与概率区别」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','频率与概率区别是概率（第10章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0136-1','math','高中',14,'hs-kp-0136','single_choice',0.45,'下列对「多事件综合概率」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','多事件综合概率是概率（第10章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0137-1','math','高中',14,'hs-kp-0137','single_choice',0.55,'下列对「随机试验辨析」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','随机试验辨析是概率（第10章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0138-1','math','高中',14,'hs-kp-0138','single_choice',0.65,'下列对「概率模型选择」的理解正确的是？','[{"key":"A","text":"它属于概率的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','概率模型选择是概率（第10章）的正式知识点','template-hs','approved','通用');

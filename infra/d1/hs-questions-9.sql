@@ -1,0 +1,28 @@
+-- ============================================================
+-- 第9章 统计 补题（14学期, 知识点 115-126）
+-- 参数化原创题 source='template-hs'
+-- ============================================================
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0115-1','math','高中',14,'hs-kp-0115','single_choice',0.35,'下列对「分层抽样方法」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','分层抽样方法是统计（第9章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0116-1','math','高中',14,'hs-kp-0116','single_choice',0.45,'下列对「频率分布直方图结构」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','频率分布直方图结构是统计（第9章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0117-1','math','高中',14,'hs-kp-0117','single_choice',0.55,'下列对「样本平均数、中位数、众数」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','样本平均数、中位数、众数是统计（第9章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0118-1','math','高中',14,'hs-kp-0118','single_choice',0.65,'下列对「百分位数计算」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','百分位数计算是统计（第9章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0119-1','math','高中',14,'hs-kp-0119','single_choice',0.75,'下列对「直方图求中位数、平均数」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','直方图求中位数、平均数是统计（第9章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0120-1','math','高中',14,'hs-kp-0120','single_choice',0.35,'下列对「样本方差与标准差」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','样本方差与标准差是统计（第9章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0121-1','math','高中',14,'hs-kp-0121','single_choice',0.45,'下列对「简单随机抽样」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','简单随机抽样是统计（第9章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0122-1','math','高中',14,'hs-kp-0122','single_choice',0.55,'下列对「抽样误差分析」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','抽样误差分析是统计（第9章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0123-1','math','高中',14,'hs-kp-0123','single_choice',0.65,'下列对「数据整理与作图」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','数据整理与作图是统计（第9章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0124-1','math','高中',14,'hs-kp-0124','single_choice',0.75,'下列对「总体估计思想」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','总体估计思想是统计（第9章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0125-1','math','高中',14,'hs-kp-0125','single_choice',0.35,'下列对「数据特征分析」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','数据特征分析是统计（第9章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0126-1','math','高中',14,'hs-kp-0126','single_choice',0.45,'下列对「统计图表辨析」的理解正确的是？','[{"key":"A","text":"它属于统计的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','统计图表辨析是统计（第9章）的正式知识点','template-hs','approved','通用');

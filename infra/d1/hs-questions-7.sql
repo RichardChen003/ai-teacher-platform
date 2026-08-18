@@ -1,0 +1,22 @@
+-- ============================================================
+-- 第7章 复数 补题（14学期, 知识点 88-96）
+-- 参数化原创题 source='template-hs'
+-- ============================================================
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0088-1','math','高中',14,'hs-kp-0088','single_choice',0.65,'下列对「i的周期性运算」的理解正确的是？','[{"key":"A","text":"它属于复数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','i的周期性运算是复数（第7章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0089-1','math','高中',14,'hs-kp-0089','single_choice',0.75,'下列对「复数的模」的理解正确的是？','[{"key":"A","text":"它属于复数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','复数的模是复数（第7章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0090-1','math','高中',14,'hs-kp-0090','single_choice',0.35,'下列对「共轭复数定义」的理解正确的是？','[{"key":"A","text":"它属于复数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','共轭复数定义是复数（第7章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0091-1','math','高中',14,'hs-kp-0091','single_choice',0.45,'下列对「共轭复数性质」的理解正确的是？','[{"key":"A","text":"它属于复数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','共轭复数性质是复数（第7章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0092-1','math','高中',14,'hs-kp-0092','single_choice',0.55,'下列对「复数四则运算」的理解正确的是？','[{"key":"A","text":"它属于复数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','复数四则运算是复数（第7章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0093-1','math','高中',14,'hs-kp-0093','single_choice',0.65,'下列对「复数几何意义」的理解正确的是？','[{"key":"A","text":"它属于复数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','复数几何意义是复数（第7章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0094-1','math','高中',14,'hs-kp-0094','single_choice',0.75,'下列对「复数相等条件」的理解正确的是？','[{"key":"A","text":"它属于复数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','复数相等条件是复数（第7章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0095-1','math','高中',14,'hs-kp-0095','single_choice',0.35,'下列对「复数分类」的理解正确的是？','[{"key":"A","text":"它属于复数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','复数分类是复数（第7章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0096-1','math','高中',14,'hs-kp-0096','single_choice',0.45,'下列对「复数模长综合计算」的理解正确的是？','[{"key":"A","text":"它属于复数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','复数模长综合计算是复数（第7章）的正式知识点','template-hs','approved','通用');

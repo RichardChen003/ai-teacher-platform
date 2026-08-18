@@ -1,0 +1,24 @@
+-- ============================================================
+-- 第5章 三角函数 补题（13学期, 知识点 63-72）
+-- 参数化原创题 source='template-hs'
+-- ============================================================
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0063-1','math','高中',13,'hs-kp-0063','single_choice',0.65,'下列对「弧度制」的理解正确的是？','[{"key":"A","text":"它属于三角函数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','弧度制是三角函数（第5章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0064-1','math','高中',13,'hs-kp-0064','single_choice',0.75,'下列对「扇形弧长、面积公式」的理解正确的是？','[{"key":"A","text":"它属于三角函数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','扇形弧长、面积公式是三角函数（第5章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0065-1','math','高中',13,'hs-kp-0065','single_choice',0.35,'下列对「三角函数定义」的理解正确的是？','[{"key":"A","text":"它属于三角函数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','三角函数定义是三角函数（第5章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0066-1','math','高中',13,'hs-kp-0066','single_choice',0.45,'下列对「三角函数正负判断」的理解正确的是？','[{"key":"A","text":"它属于三角函数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','三角函数正负判断是三角函数（第5章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0067-1','math','高中',13,'hs-kp-0067','single_choice',0.55,'下列对「同角三角函数关系」的理解正确的是？','[{"key":"A","text":"它属于三角函数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','同角三角函数关系是三角函数（第5章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0068-1','math','高中',13,'hs-kp-0068','single_choice',0.65,'下列对「诱导公式应用」的理解正确的是？','[{"key":"A","text":"它属于三角函数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','诱导公式应用是三角函数（第5章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0069-1','math','高中',13,'hs-kp-0069','single_choice',0.75,'下列对「正余弦正切基础图像性质」的理解正确的是？','[{"key":"A","text":"它属于三角函数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','正余弦正切基础图像性质是三角函数（第5章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0070-1','math','高中',13,'hs-kp-0070','single_choice',0.35,'下列对「三角函数图像变换」的理解正确的是？','[{"key":"A","text":"它属于三角函数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','三角函数图像变换是三角函数（第5章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0071-1','math','高中',13,'hs-kp-0071','single_choice',0.45,'下列对「和差、倍角、辅助角公式」的理解正确的是？','[{"key":"A","text":"它属于三角函数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','和差、倍角、辅助角公式是三角函数（第5章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0072-1','math','高中',13,'hs-kp-0072','single_choice',0.55,'下列对「三角函数综合求值」的理解正确的是？','[{"key":"A","text":"它属于三角函数的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','三角函数综合求值是三角函数（第5章）的正式知识点','template-hs','approved','通用');

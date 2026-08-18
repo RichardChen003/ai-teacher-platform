@@ -113,6 +113,8 @@ export async function listKnowledgePoints(c: { env: Env }, subject?: string, sta
 }
 
 // ---------- questions ----------
+const IN_CHUNK = 90; // Cloudflare D1 变量上限为 100（非 SQLite 的 999），分批查询避免 too many SQL variables
+
 export async function drawQuestions(
   c: { env: Env },
   opts: {
@@ -126,48 +128,52 @@ export async function drawQuestions(
 ) {
   // MVP：按知识点分组抽样，难度分层（基础 40% / 中档 40% / 拔高 20%）
   // 进阶：IRT 自适应组卷（见 docs/01 §5.1）
-  const kpIn = opts.knowledgePointIds.map(() => "?").join(",");
   const gradeCond = opts.gradeLevel === null ? "" : "AND grade_level = ? ";
   // 教材过滤：指定了具体版本（非"通用"）时，题目版本需等于该版本或"通用"（不限教材题）
   const tb = opts.textbookVersion && opts.textbookVersion !== "通用" ? opts.textbookVersion : null;
   const tbCond = tb ? "AND (textbook_version = ? OR textbook_version = '通用') " : "";
-  let { results } = await c.env.DB.prepare(
-    `SELECT * FROM questions
-     WHERE subject = ? AND review_status = 'approved'
-       ${gradeCond}${tbCond} AND knowledge_point_id IN (${kpIn})
-     ORDER BY difficulty ASC`
-  )
-    .bind(
-      opts.subject,
-      ...(opts.gradeLevel === null ? [] : [opts.gradeLevel]),
-      ...(tb ? [tb] : []),
-      ...opts.knowledgePointIds
-    )
-    .all();
-  // 降级：指定版本但题量不足 count 时，放宽到全部版本（避免出不了卷）
-  const rows = (results ?? []) as unknown[];
-  if (tb && rows.length < opts.count) {
-    const fallback = await c.env.DB.prepare(
+  const gradeParams = opts.gradeLevel === null ? [] : [opts.gradeLevel];
+  const tbParams = tb ? [tb] : [];
+
+  /** 查询一批知识点对应的题目（分批避免 IN 子句超限） */
+  async function queryChunk(kpChunk: string[], useTb: boolean) {
+    const kpIn = kpChunk.map(() => "?").join(",");
+    const cond = useTb ? tbCond : "";
+    const params = [opts.subject, ...gradeParams, ...(useTb ? tbParams : []), ...kpChunk];
+    const r = await c.env.DB.prepare(
       `SELECT * FROM questions
        WHERE subject = ? AND review_status = 'approved'
-         ${gradeCond} AND knowledge_point_id IN (${kpIn})
+         ${gradeCond}${cond} AND knowledge_point_id IN (${kpIn})
        ORDER BY difficulty ASC`
     )
-      .bind(
-        opts.subject,
-        ...(opts.gradeLevel === null ? [] : [opts.gradeLevel]),
-        ...opts.knowledgePointIds
-      )
+      .bind(...params)
       .all();
-    const fbRows = (fallback.results ?? []) as unknown[];
-    // 合并去重（按 id）
-    const seen = new Set(rows.map((r: any) => String(r.id)));
-    for (const r of fbRows) {
+    return (r.results ?? []) as unknown[];
+  }
+
+  // 合并去重工具
+  function mergeRows(target: unknown[], source: unknown[]) {
+    const seen = new Set(target.map((r: any) => String(r.id)));
+    for (const r of source) {
       if (!seen.has(String((r as any).id))) {
-        rows.push(r);
+        target.push(r);
         seen.add(String((r as any).id));
       }
     }
+  }
+
+  const kps = opts.knowledgePointIds.filter((k) => k && k !== "");
+  let rows: unknown[] = [];
+  for (let i = 0; i < kps.length; i += IN_CHUNK) {
+    mergeRows(rows, await queryChunk(kps.slice(i, i + IN_CHUNK), true));
+  }
+  // 降级：指定版本但题量不足 count 时，放宽到全部版本（避免出不了卷）
+  if (tb && rows.length < opts.count) {
+    const fallback: unknown[] = [];
+    for (let i = 0; i < kps.length; i += IN_CHUNK) {
+      mergeRows(fallback, await queryChunk(kps.slice(i, i + IN_CHUNK), false));
+    }
+    mergeRows(rows, fallback);
   }
   return pickStratified(rows, opts.count);
 }

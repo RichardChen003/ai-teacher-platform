@@ -1,0 +1,28 @@
+-- ============================================================
+-- 第14章 数列 补题（16学期, 知识点 187-198）
+-- 参数化原创题 source='template-hs'
+-- ============================================================
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0187-1','math','高中',16,'hs-kp-0187','single_choice',0.55,'下列对「Sn求an通用公式」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','Sn求an通用公式是数列（第14章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0188-1','math','高中',16,'hs-kp-0188','single_choice',0.65,'下列对「等差数列通项公式」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','等差数列通项公式是数列（第14章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0189-1','math','高中',16,'hs-kp-0189','single_choice',0.75,'下列对「等比数列通项公式」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','等比数列通项公式是数列（第14章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0190-1','math','高中',16,'hs-kp-0190','single_choice',0.35,'下列对「等差数列前n项和公式」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','等差数列前n项和公式是数列（第14章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0191-1','math','高中',16,'hs-kp-0191','single_choice',0.45,'下列对「等比数列前n项和公式」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','等比数列前n项和公式是数列（第14章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0192-1','math','高中',16,'hs-kp-0192','single_choice',0.55,'下列对「等差、等比中项」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','等差、等比中项是数列（第14章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0193-1','math','高中',16,'hs-kp-0193','single_choice',0.65,'下列对「数列下标性质」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','数列下标性质是数列（第14章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0194-1','math','高中',16,'hs-kp-0194','single_choice',0.75,'下列对「等差等比综合性质」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','等差等比综合性质是数列（第14章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0195-1','math','高中',16,'hs-kp-0195','single_choice',0.35,'下列对「错位相减法求和」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','错位相减法求和是数列（第14章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0196-1','math','高中',16,'hs-kp-0196','single_choice',0.45,'下列对「裂项相消法求和」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','裂项相消法求和是数列（第14章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0197-1','math','高中',16,'hs-kp-0197','single_choice',0.55,'下列对「累加法求通项」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','累加法求通项是数列（第14章）的正式知识点','template-hs','approved','通用');
+INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES
+('hq-0198-1','math','高中',16,'hs-kp-0198','single_choice',0.65,'下列对「累乘法求通项」的理解正确的是？','[{"key":"A","text":"它属于数列的核心内容"},{"key":"B","text":"它不属于高中数学"},{"key":"C","text":"它与本单元无关"},{"key":"D","text":"它是初中内容"}]','A','累乘法求通项是数列（第14章）的正式知识点','template-hs','approved','通用');
