@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { knowledgePoints } from "../lib/knowledgePoints";
 import { generateKnowledgePpt, type RichDeck } from "../lib/api";
+import { gradeLabel } from "../lib/grade";
 import DeckPreview from "../components/DeckPreview";
 
 const subjectLabelMap: Record<string, string> = {
@@ -9,10 +10,6 @@ const subjectLabelMap: Record<string, string> = {
   physics: "物理",
   chemistry: "化学",
 };
-
-function gradeLabel(g: number) {
-  return g <= 9 ? `初${g}` : `高${g - 9}`;
-}
 
 /* ---------- 思维导图（中心节点 + 放射状分支） ---------- */
 function MindMap({ root, children }: { root: string; children: string[] }) {
@@ -80,7 +77,9 @@ export default function KnowledgePointDetail() {
 
   const g = Number(grade);
   const idx = Number(index);
-  const point = knowledgePoints[subject]?.[g]?.[idx];
+  // 学期粒度(7~18) → 学年粒度(7~11)：知识库按学年组织，同学年上/下学期共用
+  const yearOf = (n: number) => Math.floor((n - 7) / 2) + 7;
+  const point = knowledgePoints[subject]?.[yearOf(g)]?.[idx];
 
   const subjectLabel = subjectLabelMap[subject] ?? subject;
 

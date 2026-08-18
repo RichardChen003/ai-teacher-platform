@@ -1,25 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-// 年级/科目写法沿用「入测诊断」页：学科 数学/物理/化学，年级 初7~初9、高1~高2
-const subjects = [
-  { key: "math", label: "数学", emoji: "📐" },
-  { key: "physics", label: "物理", emoji: "⚛️" },
-  { key: "chemistry", label: "化学", emoji: "🧪" },
-];
-
-const grades = [7, 8, 9, 10, 11];
-
-function gradeLabel(g: number) {
-  return g <= 9 ? `初${g}` : `高${g - 9}`;
-}
+import LessonSelector from "../components/LessonSelector";
+import { gradeLabel } from "../lib/grade";
 
 export default function ClassroomAll() {
   const navigate = useNavigate();
   const [subject, setSubject] = useState("math");
+  const [region, setRegion] = useState("");
   const [grade, setGrade] = useState(7);
 
-  const subjectLabel = subjects.find((s) => s.key === subject)?.label ?? subject;
+  const subjectLabel = subject === "math" ? "数学" : subject === "physics" ? "物理" : "化学";
 
   return (
     <div className="space-y-5">
@@ -44,49 +34,15 @@ export default function ClassroomAll() {
         </div>
       </div>
 
-      {/* 上：年级 + 科目导航栏 */}
-      <div className="card animate-fade-up p-6">
-        <div className="flex items-center gap-2 text-sm font-semibold text-slate-700">
-          <span className="text-base">📘</span> 选择学科
-        </div>
-        <div className="mt-3 grid grid-cols-3 gap-3">
-          {subjects.map((s) => (
-            <button
-              key={s.key}
-              onClick={() => setSubject(s.key)}
-              className={`rounded-xl border p-4 text-center transition-all ${
-                subject === s.key
-                  ? "border-brand-400 bg-brand-50 ring-4 ring-brand-100"
-                  : "border-slate-200 hover:border-brand-200"
-              }`}
-            >
-              <div className="text-2xl">{s.emoji}</div>
-              <div className={`mt-1.5 text-sm font-medium ${subject === s.key ? "text-brand-700" : "text-slate-600"}`}>
-                {s.label}
-              </div>
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-7 flex items-center gap-2 text-sm font-semibold text-slate-700">
-          <span className="text-base">🎓</span> 选择年级
-        </div>
-        <div className="mt-3 grid grid-cols-5 gap-2">
-          {grades.map((g) => (
-            <button
-              key={g}
-              onClick={() => setGrade(g)}
-              className={`rounded-xl border py-2.5 text-sm font-medium transition-all ${
-                grade === g
-                  ? "border-brand-400 bg-brand-600 text-white shadow-[0_4px_12px_-2px_rgb(43_83_223/0.4)]"
-                  : "border-slate-200 text-slate-600 hover:border-brand-200"
-              }`}
-            >
-              {gradeLabel(g)}
-            </button>
-          ))}
-        </div>
-      </div>
+      {/* 学科 + 就读地区 + 年级（与入测诊断同款选择器） */}
+      <LessonSelector
+        value={{ subject, region, grade }}
+        onChange={(v) => {
+          setSubject(v.subject);
+          setRegion(v.region);
+          setGrade(v.grade);
+        }}
+      />
 
       {/* 下：对应课程（暂未接入，留空） */}
       <div className="card flex flex-col items-center rounded-2xl border border-dashed border-slate-200 py-16 text-center">

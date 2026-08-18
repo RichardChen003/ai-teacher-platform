@@ -1,27 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LessonSelector from "../components/LessonSelector";
+import { gradeLabel } from "../lib/grade";
 import { knowledgePoints } from "../lib/knowledgePoints";
 
-// 年级/科目写法沿用「入测诊断」页：学科 数学/物理/化学，年级 初7~初9、高1~高2
-const subjects = [
-  { key: "math", label: "数学", emoji: "📐" },
-  { key: "physics", label: "物理", emoji: "⚛️" },
-  { key: "chemistry", label: "化学", emoji: "🧪" },
-];
+// 学期粒度(7~18) → 学年粒度(7~11)：初一上/下→7、初二上/下→8……高三→12
+// 知识库按学年组织，同一学年上/下学期共用该学年的重点知识点
+const yearOf = (g: number) => Math.floor((g - 7) / 2) + 7;
 
-const grades = [7, 8, 9, 10, 11];
-
-function gradeLabel(g: number) {
-  return g <= 9 ? `初${g}` : `高${g - 9}`;
-}
+const subjectLabelOf = (key: string) =>
+  key === "math" ? "数学" : key === "physics" ? "物理" : "化学";
 
 export default function ClassroomFull() {
   const navigate = useNavigate();
   const [subject, setSubject] = useState("math");
+  const [region, setRegion] = useState("");
   const [grade, setGrade] = useState(7);
 
-  const subjectLabel = subjects.find((s) => s.key === subject)?.label ?? subject;
-  const points = knowledgePoints[subject]?.[grade] ?? [];
+  const points = knowledgePoints[subject]?.[yearOf(grade)] ?? [];
+  const subjectLabel = subjectLabelOf(subject);
 
   return (
     <div className="space-y-5">
@@ -46,49 +43,15 @@ export default function ClassroomFull() {
         </div>
       </div>
 
-      {/* 上：年级 + 科目导航栏 */}
-      <div className="card animate-fade-up p-6">
-        <div className="flex items-center gap-2 text-sm font-semibold text-slate-700">
-          <span className="text-base">📘</span> 选择学科
-        </div>
-        <div className="mt-3 grid grid-cols-3 gap-3">
-          {subjects.map((s) => (
-            <button
-              key={s.key}
-              onClick={() => setSubject(s.key)}
-              className={`rounded-xl border p-4 text-center transition-all ${
-                subject === s.key
-                  ? "border-brand-400 bg-brand-50 ring-4 ring-brand-100"
-                  : "border-slate-200 hover:border-brand-200"
-              }`}
-            >
-              <div className="text-2xl">{s.emoji}</div>
-              <div className={`mt-1.5 text-sm font-medium ${subject === s.key ? "text-brand-700" : "text-slate-600"}`}>
-                {s.label}
-              </div>
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-7 flex items-center gap-2 text-sm font-semibold text-slate-700">
-          <span className="text-base">🎓</span> 选择年级
-        </div>
-        <div className="mt-3 grid grid-cols-5 gap-2">
-          {grades.map((g) => (
-            <button
-              key={g}
-              onClick={() => setGrade(g)}
-              className={`rounded-xl border py-2.5 text-sm font-medium transition-all ${
-                grade === g
-                  ? "border-brand-400 bg-brand-600 text-white shadow-[0_4px_12px_-2px_rgb(43_83_223/0.4)]"
-                  : "border-slate-200 text-slate-600 hover:border-brand-200"
-              }`}
-            >
-              {gradeLabel(g)}
-            </button>
-          ))}
-        </div>
-      </div>
+      {/* 学科 + 就读地区 + 年级（与入测诊断同款选择器） */}
+      <LessonSelector
+        value={{ subject, region, grade }}
+        onChange={(v) => {
+          setSubject(v.subject);
+          setRegion(v.region);
+          setGrade(v.grade);
+        }}
+      />
 
       {/* 下：重点知识点 */}
       {points.length > 0 ? (
