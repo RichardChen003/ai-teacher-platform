@@ -157,7 +157,7 @@ export const CreateDiagnosisSchema = z.object({
   grade: z.number().int().min(7).max(18), // 学期粒度：7=初一上 … 18=高三下
   region: z.string().optional(),          // 就读地区（省/市），用于匹配教材版本
   textbookVersion: z.string().optional(), // 教材版本（如 人教版）；未传时由 region 推断
-  questionCount: z.number().int().min(10).max(30).default(18),
+  questionCount: z.number().int().min(5).max(30).default(18), // 与前端 slider（5~20）一致，支持快速测试
 });
 export type CreateDiagnosisInput = z.infer<typeof CreateDiagnosisSchema>;
 
