@@ -98,6 +98,7 @@ function ReviewCard({ item, index }: { item: ReviewItem; index: number }) {
   const { q, detail, userAnswer } = item;
   const isChoice = q.type !== "short_answer";
   const ok = detail.correct;
+  const pending = !ok && !detail.correctAnswer.trim(); // 无标准答案 → 待人工批改
   const rightKey = detail.correctAnswer.trim().toUpperCase();
   const correctOpt = q.options?.find((o) => o.key === rightKey);
   const pickedOpt = q.options?.find((o) => o.key === userAnswer.trim().toUpperCase());
@@ -111,6 +112,11 @@ function ReviewCard({ item, index }: { item: ReviewItem; index: number }) {
             <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-600">
               <svg viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5"><path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" /></svg>
               回答正确
+            </span>
+          ) : pending ? (
+            <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-500">
+              <svg viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5"><path fillRule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-8-5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5A.75.75 0 0 1 10 5Zm0 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clipRule="evenodd" /></svg>
+              待人工批改
             </span>
           ) : (
             <span className="inline-flex items-center gap-1 rounded-md bg-rose-50 px-2 py-0.5 text-xs font-bold text-rose-600">
@@ -163,7 +169,9 @@ function ReviewCard({ item, index }: { item: ReviewItem; index: number }) {
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50/50 px-4 py-2.5 text-sm text-slate-700">
             <span className="shrink-0 text-xs font-bold text-emerald-600">正确答案</span>
-            <span className="min-w-0 flex-1 whitespace-pre-wrap"><RichText text={detail.correctAnswer} /></span>
+            <span className="min-w-0 flex-1 whitespace-pre-wrap">
+              <RichText text={detail.correctAnswer || "（本题暂未提供标准答案，请咨询老师或参考解析）"} />
+            </span>
           </div>
         </div>
       )}

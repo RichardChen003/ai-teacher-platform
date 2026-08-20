@@ -9,8 +9,9 @@ import sys
 import numpy as np
 from ctypes import wintypes as wt
 
-# 公式图统一目标主字号（px）：字符全高（数字/字母含上下伸展）
-TARGET_MAIN_FONT = 28
+# 公式图统一目标主字号（px）：与题干正文 15px 文字和谐（docx 中公式与正文同字号）
+# 注意：此为"字符全高"（数字/字母含上下伸展），与 15px 汉字视觉相当
+TARGET_MAIN_FONT = 15
 # 几何图（坐标系/图形）不走字号归一，回退按宽度缩放
 GEOM_MAX_W = 700
 

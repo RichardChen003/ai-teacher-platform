@@ -29,30 +29,36 @@ try {
     page.getByRole("button", { name: /demo|演示/i }).first().click());
   await page.waitForTimeout(2500);
 
-  // 2. 诊断页
-  await page.goto(BASE + "/diagnosis", { waitUntil: "networkidle" });
-  await page.waitForTimeout(800);
-  // 选高一年级（第 2 行第 1 个 = 高一上 grade 13）
-  const gradeBtns = page.locator("button", { hasText: "高一上" });
-  await gradeBtns.first().click().catch(() => {});
-  await page.getByText("开始诊断").click();
-  await page.waitForTimeout(2000);
+  // 2. 诊断页（重试直到抽到带公式图的卷子，最多 6 次）
+  let imgs = [];
+  let levelTags = 0;
+  for (let attempt = 0; attempt < 6; attempt++) {
+    await page.goto(BASE + "/diagnosis", { waitUntil: "networkidle" });
+    await page.waitForTimeout(600);
+    await page.locator("button", { hasText: "高一上" }).first().click().catch(() => {});
+    await page.getByText("开始诊断").click();
+    await page.waitForTimeout(2200);
+    imgs = await page.locator("img[src*='question-imgs']").evaluateAll((els) =>
+      els.map((el) => ({ w: el.naturalWidth, h: el.naturalHeight }))
+    );
+    if (imgs.length > 0) break;
+    console.log(`  （第 ${attempt + 1} 次组卷未含公式图，重试…）`);
+  }
+  levelTags = await page.locator("span", { hasText: /^(基础|中档|压轴)$/ }).count();
 
   // 3. 题目页：检查公式图尺寸
-  const imgs = await page.locator("img[src*='question-imgs']").evaluateAll((els) =>
-    els.map((el) => ({ w: el.naturalWidth, h: el.naturalHeight }))
-  );
   console.log(`题目页公式图数量: ${imgs.length}`);
   if (imgs.length > 0) {
     const hs = imgs.map((i) => i.h);
     console.log(`公式图高度范围: ${Math.min(...hs)} ~ ${Math.max(...hs)}px`);
-    const small = hs.filter((h) => h < 15).length;
-    console.log(`过小(<15px)图: ${small} 张 ${small > 0 ? "⚠️" : "✅"}`);
+    const small = hs.filter((h) => h < 10).length;
+    console.log(`过小(<10px)图: ${small} 张 ${small > 0 ? "⚠️" : "✅"}`);
+    const huge = hs.filter((h) => h > 90).length;
+    console.log(`过大(>90px)图: ${huge} 张 ${huge > 0 ? "⚠️(几何图?)" : "✅"}`);
   } else {
-    console.log("⚠️ 未抽到带公式图的题（题库随机，可重试）");
+    console.log("⚠️ 6 次组卷均未抽到带公式图的题");
   }
   // 难度标签
-  const levelTags = await page.locator("span", { hasText: /^(基础|中档|压轴)$/ }).count();
   console.log(`难度标签数量: ${levelTags} ${levelTags > 0 ? "✅" : "⚠️"}`);
 
   // 4. 答题（每题选第一项或填 1）→ 交卷
@@ -84,12 +90,21 @@ try {
   const hasAnalysis = bodyText.includes("解析");
   const hasRight = bodyText.includes("回答正确");
   const hasWrong = bodyText.includes("回答错误");
+  const hasPending = bodyText.includes("待人工批改");
+  // 薄弱点不得出现知识点 id 乱码（hs-kp-/jkp- 前缀）
+  const weakText = await page
+    .locator("div", { hasText: "需要加强的知识点" })
+    .textContent()
+    .catch(() => "");
+  const hasKpIdGarbled = /(hs-kp-|jkp-)\d{4}/.test(weakText || "");
   console.log("\n=== 逐题回顾断言 ===");
   console.log(`逐题回顾区块: ${hasReview ? "✅" : "❌"}`);
   console.log(`正确答案展示: ${hasCorrect ? "✅" : "❌"}`);
   console.log(`解析展示: ${hasAnalysis ? "✅" : "❌"}`);
   console.log(`回答正确标记: ${hasRight ? "✅" : "❌"}`);
   console.log(`回答错误标记: ${hasWrong ? "✅" : "❌"}`);
+  console.log(`待人工批改(解答题无答案): ${hasPending ? "✅" : "ℹ️(未抽到无答案解答题)"}`);
+  console.log(`薄弱点无乱码id: ${!hasKpIdGarbled ? "✅" : "❌ 仍显示 hs-kp-xxx"}`);
 
   console.log("\n=== 控制台错误 ===");
   const imgErrors = errors.filter((e) => e.includes("question-imgs") || e.includes("404"));

@@ -121,7 +121,7 @@ export function buildReport(
   const weakPoints = decorated
     .filter((it) => it.status === "weak")
     .sort((a, b) => a.level - b.level)
-    .map((it) => it.knowledge_point_id);
+    .map((it) => it.name);
   const weakNames = decorated.filter((it) => it.status === "weak").map((it) => it.name);
   const mediumNames = decorated.filter((it) => it.status === "medium").map((it) => it.name);
   const goodNames = decorated.filter((it) => it.status === "good").map((it) => it.name);
