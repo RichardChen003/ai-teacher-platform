@@ -68,6 +68,7 @@ export const diagnosisRoutes = new Hono<{ Bindings: Env }>()
       knowledgePointId: q.knowledge_point_id,
       type: q.type,
       difficulty: q.difficulty,
+      level: q.level ?? "中档",
       content: q.content,
       options: q.options ? JSON.parse(q.options) : undefined,
     }));

@@ -105,11 +105,13 @@ CREATE TABLE IF NOT EXISTS questions (
   review_status      TEXT NOT NULL DEFAULT 'approved',  -- pending | approved | rejected
   tags               TEXT,                 -- JSON 数组
   textbook_version   TEXT NOT NULL DEFAULT '人教版',  -- 教材版本：人教版 / 北师大版 / 苏教版 / 华师大版 / 湘教版 / 沪教版 / 浙教版 / 通用
+  level              TEXT NOT NULL DEFAULT '基础',  -- 难度档次：基础 / 中档 / 压轴
   created_at         TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS idx_q_kp   ON questions(knowledge_point_id);
 CREATE INDEX IF NOT EXISTS idx_q_draw ON questions(subject, grade_level, difficulty, review_status);
 CREATE INDEX IF NOT EXISTS idx_q_tb   ON questions(subject, grade_level, textbook_version, review_status);
+CREATE INDEX IF NOT EXISTS idx_q_lv   ON questions(subject, grade_level, level, review_status);
 
 -- ---------- 测评（入测 / 课后小测） ----------
 CREATE TABLE IF NOT EXISTS assessments (

@@ -9,6 +9,7 @@ import {
 } from "../lib/api";
 import { gradeLabel, JUNIOR_GRADES, SENIOR_GRADES } from "../lib/grade";
 import { REGIONS, REGION_CITIES, textbookOfRegion, splitRegion } from "@aiteacher/shared";
+import RichText from "../components/RichText";
 
 type Phase = "config" | "quiz" | "report";
 
@@ -33,7 +34,7 @@ export function QuestionCard({
         <span className="badge-blue">第 {index + 1} 题 / 共 {total} 题</span>
         <span className="badge-slate">{q.type === "short_answer" ? "解答题" : "选择题"}</span>
       </div>
-      <p className="mt-4 text-[15px] font-medium leading-relaxed text-slate-800">{q.content}</p>
+      <p className="mt-4 text-[15px] font-medium leading-relaxed text-slate-800"><RichText text={q.content} /></p>
       {isChoice && q.options ? (
         <div className="mt-5 grid gap-2.5">
           {q.options.map((opt) => {
@@ -55,7 +56,7 @@ export function QuestionCard({
                 >
                   {opt.key}
                 </span>
-                <span className={active ? "font-medium text-brand-800" : "text-slate-700"}>{opt.text}</span>
+                <span className={active ? "font-medium text-brand-800" : "text-slate-700"}><RichText text={opt.text} /></span>
               </button>
             );
           })}

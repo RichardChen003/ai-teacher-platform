@@ -189,22 +189,24 @@ function shuffleTake(arr: unknown[], n: number): unknown[] {
 }
 
 function pickStratified(rows: unknown[], count: number): unknown[] {
-  // 难度分层：基础 ≤0.45 / 中档 0.45~0.65 / 拔高 >0.65
-  const easy: unknown[] = [], mid: unknown[] = [], hard: unknown[] = [];
+  // 按难度档次分层（level 列：基础 / 中档 / 压轴；缺失时按 difficulty 值兜底）
+  const buckets: Record<string, unknown[]> = { 基础: [], 中档: [], 压轴: [] };
   for (const r of rows) {
-    const d = Number((r as any).difficulty ?? 0.5);
-    if (d <= 0.45) easy.push(r);
-    else if (d <= 0.65) mid.push(r);
-    else hard.push(r);
+    let lv = String((r as any).level ?? "");
+    if (!(lv in buckets)) {
+      const d = Number((r as any).difficulty ?? 0.5);
+      lv = d <= 0.45 ? "基础" : d <= 0.65 ? "中档" : "压轴";
+    }
+    buckets[lv].push(r);
   }
-  // 层内随机抽取，配额 40% / 40% / 20%
-  const qEasy = Math.round(count * 0.4);
-  const qMid = Math.round(count * 0.4);
-  const qHard = Math.max(0, count - qEasy - qMid);
+  // 层内随机抽取，配额：基础 50% / 中档 25% / 压轴 25%
+  const qBasic = Math.round(count * 0.5);
+  const qMid = Math.round(count * 0.25);
+  const qHard = Math.max(0, count - qBasic - qMid);
   const picked: unknown[] = [
-    ...shuffleTake(easy, qEasy),
-    ...shuffleTake(mid, qMid),
-    ...shuffleTake(hard, qHard),
+    ...shuffleTake(buckets["基础"], qBasic),
+    ...shuffleTake(buckets["中档"], qMid),
+    ...shuffleTake(buckets["压轴"], qHard),
   ];
   // 某层题量不足时，用剩余题目补齐（随机）
   if (picked.length < count) {
