@@ -119,6 +119,19 @@ def split_questions(paras):
     for seq in paras:
         text = "".join(x[1] for x in seq if x[0] == "t").strip()
         m = re.match(r"^(\d+)[．.]\s*(.*)$", text)
+        # 答案区开始标志（不限于数字开头）：文档末尾的《xx》参考答案 / 题号表 / 答案表
+        if (
+            "参考答案" in text
+            or "答案表" in text
+            or text.startswith("题号")
+            or text.startswith("答案：")
+            or re.match(r"^《[^》]+》\s*参考答案", text)
+        ):
+            if cur:
+                questions.append(cur)
+                cur = None
+            in_answers = True
+            continue
         if m and int(m.group(1)) <= 100:
             rest = m.group(2).strip()
             # 答案区形如 "14．B" / "15．C【分析】"：rest 以单个答案字母开头
@@ -136,7 +149,32 @@ def split_questions(paras):
                 questions.append(cur)
             cur = {"no": no, "segs": [seq], "text": text}
         elif cur is not None and not in_answers and not text.startswith("【"):
-            cur["segs"].append(seq)
+            # 若答案区标志与题干同段（如 "…最大值 .《直线与圆的方程》参考答案题号123…"），
+            # 截断：只保留标志前的文本段（图片保留，未引用的稍后清理）
+            cut = len(text)
+            for marker in ("参考答案", "答案表"):
+                idx = text.find(marker)
+                if idx != -1:
+                    cut = min(cut, idx)
+            if cut < len(text):
+                kept = []
+                pos = 0
+                for kind, val in seq:
+                    if kind == "t":
+                        if pos >= cut:
+                            continue
+                        seg_text = val[: max(0, cut - pos)]
+                        if seg_text:
+                            kept.append((kind, seg_text))
+                        pos += len(val)
+                    else:
+                        kept.append((kind, val))
+                cur["segs"].append(kept)
+                questions.append(cur)
+                cur = None
+                in_answers = True
+            else:
+                cur["segs"].append(seq)
     if cur:
         questions.append(cur)
     return questions
@@ -181,6 +219,12 @@ def extract_question(q, z, media_map, qid, answers):
                 stream.append(val)
     full_text = "".join(stream)
     full_text = re.sub(r"^\s*\d+[．.]\s*", "", full_text).strip()
+    # 双保险：content 级剔除混入的答案区文本（"《xx》参考答案题号123…答案BCCB…"）
+    for marker in ("参考答案", "答案表"):
+        idx = full_text.find(marker)
+        if idx != -1:
+            full_text = full_text[:idx].rstrip(" ．.")
+            break
     # 2) 按选项标记切分（选项可能同段 tab 分隔，也可能分多段）
     parts = re.split(r"(?=[A-D][．．.])", full_text)
     stem = parts[0]

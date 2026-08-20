@@ -83,8 +83,10 @@ def _main_font_height(img):
         ys, xs = np.where(lab == i)
         ch = ys.max() - ys.min() + 1
         cw = xs.max() - xs.min() + 1
-        if ch < 8 or ch > h * 0.85:
-            continue  # 噪声 / 整列大图形
+        # 只过滤「整图级大图形」（如 Venn 图的圆：又高又宽）；单字符/短数字
+        # （d、a=3、2023 等：ch≈图高但 cw 窄）必须保留，否则被误判纯图形放大
+        if ch < 8 or (ch > h * 0.95 and cw > w * 0.7):
+            continue
         if cw > w * 0.7 and ch <= 3:
             continue  # 分数线 / 根号横线
         hs.append(ch)
