@@ -83,9 +83,10 @@ def _main_font_height(img):
         ys, xs = np.where(lab == i)
         ch = ys.max() - ys.min() + 1
         cw = xs.max() - xs.min() + 1
-        # 只过滤「整图级大图形」（如 Venn 图的圆：又高又宽）；单字符/短数字
-        # （d、a=3、2023 等：ch≈图高但 cw 窄）必须保留，否则被误判纯图形放大
-        if ch < 8 or (ch > h * 0.95 and cw > w * 0.7):
+        # 只把「方块状」整图级大域当图形过滤（Venn 圆等 w/h≈1）；
+        # 窄图（w/h<0.8）中 ch≈h 是单字符/符号占满裁剪框（如 d、∫、f），必须保留
+        # ——否则会被误判纯图形原样输出，导致单个字母大得离谱（2026-08-20 踩坑）
+        if ch < 8 or (ch > h * 0.95 and cw > w * 0.7 and w / h >= 0.8):
             continue
         if cw > w * 0.7 and ch <= 3:
             continue  # 分数线 / 根号横线
