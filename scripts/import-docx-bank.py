@@ -12,6 +12,11 @@ import os, re, sys, json, zipfile, struct, random
 from lxml import etree
 from PIL import Image
 import io
+import importlib.util
+_spec = importlib.util.spec_from_file_location(
+    "wg", os.path.join(os.path.dirname(os.path.abspath(__file__)), "wmf-gdi-render.py"))
+wg = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(wg)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC_BASE = r"D:\BaiduNetdiskDownload\2026新高考数学分层练1000题基础题中档题难题培优拔尖题"
@@ -76,20 +81,30 @@ def parse_docx(path):
     return paras, z, media_map
 
 
-def render_wmf(z, media_name, out_name, scale=3):
-    """WMF -> PNG，返回文件名；失败返回 None"""
+def render_wmf(z, media_name, out_name, dpi=600):
+    """公式/插图 -> PNG
+    - wmf：Windows GDI 原生渲染（与 Word 同引擎，矢量高清），失败回退 Pillow
+    - png/jpeg：几何插图直接复制原图（保持清晰）
+    返回文件名；失败返回 None"""
     try:
-        if not media_name.lower().endswith(".wmf"):
-            return None
+        ext = media_name.lower().split(".")[-1]
         data = z.read("word/media/" + media_name)
-        tmp = os.path.join(IMG_DIR, ".tmp.wmf")
-        with open(tmp, "wb") as f:
-            f.write(data)
-        im = Image.open(tmp)
-        im.load()
-        w, h = im.size
-        im = im.resize((max(1, int(w * scale)), max(1, int(h * scale))), Image.LANCZOS)
-        im.save(os.path.join(IMG_DIR, out_name), "PNG")
+        if ext == "wmf":
+            img = wg.render_wmf_gdi(data, dpi)
+            if img is None:
+                # 回退 Pillow（保底）
+                tmp = os.path.join(IMG_DIR, ".tmp.wmf")
+                with open(tmp, "wb") as f:
+                    f.write(data)
+                im = Image.open(tmp)
+                im.load()
+                w, h = im.size
+                img = im.resize((max(1, int(w * 3)), max(1, int(h * 3))), Image.LANCZOS)
+            img.save(os.path.join(IMG_DIR, out_name), "PNG", optimize=True)
+        else:
+            # 原图直接复制（png/jpeg 等）
+            with open(os.path.join(IMG_DIR, out_name), "wb") as f:
+                f.write(data)
         return out_name
     except Exception as e:
         print(f"  [渲染失败] {media_name}: {e}")
