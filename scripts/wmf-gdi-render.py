@@ -53,21 +53,21 @@ gdi32.SetViewportExtEx.argtypes = [wt.HDC, ctypes.c_int, ctypes.c_int, ctypes.c_
 
 
 
-def render_wmf_gdi(wmf_bytes, dpi=300):
-    """把 WMF 字节渲染为 PIL Image（高分辨率，白底）。失败返回 None"""
+def render_wmf_gdi(wmf_bytes, dpi=300, scale=3):
+    """把 WMF 字节渲染为 PIL Image（白底，高清）。
+    关键：MathType WMF 内部自带 SetMapMode/SetViewportExt 记录，播放时会覆盖外部缩放映射，
+    因此 DIB 必须按 WMF bbox 原始逻辑尺寸 1:1 创建，渲染完再用 PIL 放大 scale 倍。
+    失败返回 None"""
     if not wmf_bytes or wmf_bytes[:4] != b"\xd7\xcd\xc6\x9a":
         return None
     x1, y1, x2, y2 = struct.unpack("<hhhh", wmf_bytes[6:14])
-    inch = struct.unpack("<H", wmf_bytes[14:16])[0]
     w_log = x2 - x1
     h_log = y2 - y1
-    if w_log <= 0 or h_log <= 0 or inch <= 0:
+    if w_log <= 0 or h_log <= 0:
         return None
-    target_w = max(1, round(w_log * dpi / inch))
-    target_h = max(1, round(h_log * dpi / inch))
-    if target_w > 4000 or target_h > 4000:  # 防呆
-        target_w = min(target_w, 4000)
-        target_h = min(target_h, 4000)
+    # DIB = bbox 原始逻辑尺寸（1:1，避免被 WMF 内部映射覆盖导致裁剪白图）
+    target_w = max(1, min(w_log, 4000))
+    target_h = max(1, min(h_log, 4000))
 
     hdc_screen = user32.GetDC(None)
     hdc = gdi32.CreateCompatibleDC(hdc_screen)
@@ -96,12 +96,9 @@ def render_wmf_gdi(wmf_bytes, dpi=300):
             gdi32.SelectObject(hdc, old)
             gdi32.DeleteObject(hbmp)
             return None
-        # 缩放映射：window = WMF 逻辑坐标，viewport = 目标像素
-        gdi32.SetMapMode(hdc, 2)  # MM_ANISOTROPIC
-        gdi32.SetWindowOrgEx(hdc, x1, y1, None)
-        gdi32.SetWindowExtEx(hdc, w_log, h_log, None)
-        gdi32.SetViewportOrgEx(hdc, 0, 0, None)
-        gdi32.SetViewportExtEx(hdc, target_w, target_h, None)
+        # 关键：不要设置外部映射（保持默认 MM_TEXT）。
+        # WMF 内部记录自带映射（如 SetViewportExt 1152x640），PlayMetaFile 播放时会覆盖外部设置；
+        # DIB 用 bbox 原始逻辑尺寸 1:1，正好与 WMF 内部画布一致。
         gdi32.PlayMetaFile(hdc, hMF)
         gdi32.DeleteMetaFile(hMF)
         # 读像素
@@ -109,6 +106,15 @@ def render_wmf_gdi(wmf_bytes, dpi=300):
         from PIL import Image
         img = Image.frombuffer("RGBA", (target_w, target_h), buf, "raw", "BGRA", 0, 1)
         img = img.convert("RGB")
+        # 阈值裁剪白边（忽略浅灰抗锯齿残留）+ 缩放到目标宽度，控制体积同时保证清晰
+        gray = img.convert("L")
+        mask = gray.point(lambda v: 255 if v < 248 else 0)
+        bbox = mask.getbbox()
+        if bbox:
+            img = img.crop(bbox)
+        max_w = 700
+        if img.width > max_w:
+            img = img.resize((max_w, max(1, int(img.height * max_w / img.width))), Image.LANCZOS)
         gdi32.SelectObject(hdc, old)
         gdi32.DeleteObject(hbmp)
         return img
