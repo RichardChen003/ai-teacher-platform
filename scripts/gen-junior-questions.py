@@ -10,6 +10,24 @@ _spec = importlib.util.spec_from_file_location(
 _hsd = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(_hsd)
 CHAPTERS = _hsd.JUNIOR_CHAPTERS
 
+# 难度评分（与 scripts/relevel-questions.py 的 complexity_score 一致，防伪随机错标）
+def complexity_score(content, options_text=""):
+    s = 0
+    L = len(content or "")
+    if L >= 25: s += 1
+    if L >= 60: s += 1
+    for sym, w in (("√", 2), ("log", 1), ("ln", 1), ("sin", 1), ("cos", 1), ("tan", 1),
+                   ("∑", 2), ("∫", 3), ("lim", 2), ("²", 1), ("³", 2), ("⁻", 1), ("π", 1)):
+        if sym in content: s += content.count(sym) * w
+    if "/" in content or "分之" in content: s += 1
+    for kw, w in (("恒成立", 3), ("证明", 3), ("构造", 2), ("综合", 2), ("最值", 2), ("存在", 2),
+                  ("取值范围", 2), ("应用", 1), ("实际", 1), ("讨论", 1), ("分类", 1), ("单调性", 1)):
+        if kw in content: s += w
+    opt = options_text or ""
+    if len(opt) > 100: s += 1
+    if any(x in opt for x in ("√", "∑", "∫", "分之")): s += 1
+    return s
+
 random.seed(20260818)
 def ri(a, b): return random.randint(a, b)
 def pick(arr): return random.choice(arr)
@@ -1668,9 +1686,17 @@ def main():
             for vi, q in enumerate(variants[:3]):
                 qid = f"jq-{no:04d}-{vi + 1}"
                 opts = q.get("options") or ""
-                diff = (0.35 + (no % 5) * 0.1)
-                lines.append("INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES")
-                lines.append(f"('{qid}','math','初中',{meta['term']},'jkp-{no:04d}','{q['type']}',{diff:.2f},'{q['content'].replace(chr(39), chr(39)+chr(39))}','{opts.replace(chr(39), chr(39)+chr(39))}','{q['answer']}','{q['analysis'].replace(chr(39), chr(39)+chr(39))}','template-j','approved','通用');")
+                # 难度：按题面复杂度评分定档（与 scripts/relevel-questions.py 口径一致）
+                opt_text = ""
+                try:
+                    opt_text = " ".join(o.get("text", "") for o in json.loads(opts))
+                except Exception:
+                    pass
+                s = complexity_score(q["content"], opt_text)
+                lv = "基础" if s <= 1 else ("中档" if s <= 4 else "压轴")
+                diff = {"基础": 0.38, "中档": 0.58, "压轴": 0.78}[lv]
+                lines.append("INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version, level) VALUES")
+                lines.append(f"('{qid}','math','初中',{meta['term']},'jkp-{no:04d}','{q['type']}',{diff},'{q['content'].replace(chr(39), chr(39)+chr(39))}','{opts.replace(chr(39), chr(39)+chr(39))}','{q['answer']}','{q['analysis'].replace(chr(39), chr(39)+chr(39))}','template-j','approved','通用','{lv}');")
                 per_ch += 1; total += 1
         out = os.path.join(ROOT, "infra", "d1", f"junior-questions-{ch}.sql")
         with open(out, "w", encoding="utf-8") as f:

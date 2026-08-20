@@ -8,6 +8,7 @@
 import { writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { complexityScore, levelOf, difficultyOf, optionsText } from "./difficulty-score.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = (ch) => resolve(root, `infra/d1/hs-questions-${ch}.sql`);
@@ -590,9 +591,12 @@ function main() {
       variants.slice(0, 3).forEach((q, qi) => {
         const qid = `hq-${String(no).padStart(4, "0")}-${qi + 1}`;
         const opts = q.options ?? "";
-        const diff = (0.35 + (no % 5) * 0.1).toFixed(2);
-        lines.push(`INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES`);
-        lines.push(`('${qid}','math','高中',${meta.term},'hs-kp-${String(no).padStart(4, "0")}','${q.type}',${diff},'${q.content.replace(/'/g, "''")}','${opts.replace(/'/g, "''")}','${q.answer}','${q.analysis.replace(/'/g, "''")}','template-hs','approved','通用');`);
+        // 难度：按题面复杂度评分定档（与 scripts/relevel-questions.py 口径一致），避免伪随机错标
+        const optText = optionsText(q.options);
+        const lv = levelOf(complexityScore(q.content, optText));
+        const diff = difficultyOf(lv).toFixed(2);
+        lines.push(`INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version, level) VALUES`);
+        lines.push(`('${qid}','math','高中',${meta.term},'hs-kp-${String(no).padStart(4, "0")}','${q.type}',${diff},'${q.content.replace(/'/g, "''")}','${opts.replace(/'/g, "''")}','${q.answer}','${q.analysis.replace(/'/g, "''")}','template-hs','approved','通用','${lv}');`);
         perCh++;
         total++;
       });

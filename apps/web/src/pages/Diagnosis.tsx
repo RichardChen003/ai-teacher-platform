@@ -87,8 +87,111 @@ export function QuestionCard({
   );
 }
 
-/* ---------- 诊断报告（含掌握度条形图） ---------- */
-function ReportView({ report, onRestart }: { report: DiagnosisReport; onRestart: () => void }) {
+/* ---------- 逐题回顾卡片（交卷后展示正确答案与解析） ---------- */
+type ReviewItem = {
+  q: Question;
+  detail: { correct: boolean; correctAnswer: string; analysis: string };
+  userAnswer: string;
+};
+
+function ReviewCard({ item, index }: { item: ReviewItem; index: number }) {
+  const { q, detail, userAnswer } = item;
+  const isChoice = q.type !== "short_answer";
+  const ok = detail.correct;
+  const rightKey = detail.correctAnswer.trim().toUpperCase();
+  const correctOpt = q.options?.find((o) => o.key === rightKey);
+  const pickedOpt = q.options?.find((o) => o.key === userAnswer.trim().toUpperCase());
+  return (
+    <div className={`card animate-fade-up border-l-4 p-6 ${ok ? "border-l-emerald-500" : "border-l-rose-500"}`}>
+      {/* 题头：题号 + 对错 + 难度 */}
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <span className="badge-slate">第 {index + 1} 题</span>
+          {ok ? (
+            <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-600">
+              <svg viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5"><path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" /></svg>
+              回答正确
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1 rounded-md bg-rose-50 px-2 py-0.5 text-xs font-bold text-rose-600">
+              <svg viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5"><path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z" clipRule="evenodd" /></svg>
+              回答错误
+            </span>
+          )}
+          {q.level && (
+            <span className={`rounded-md border px-2 py-0.5 text-[11px] font-semibold ${
+              q.level === "基础" ? "border-emerald-200 bg-emerald-50 text-emerald-600"
+              : q.level === "中档" ? "border-amber-200 bg-amber-50 text-amber-600"
+              : "border-rose-200 bg-rose-50 text-rose-600"
+            }`}>{q.level}</span>
+          )}
+        </div>
+        <span className="badge-slate">{isChoice ? "选择题" : "解答题"}</span>
+      </div>
+
+      {/* 题干 */}
+      <p className="mt-3 text-[15px] font-medium leading-relaxed text-slate-800"><RichText text={q.content} /></p>
+
+      {/* 选项（仅选择题）：正确选项绿、误选红 */}
+      {isChoice && q.options ? (
+        <div className="mt-4 grid gap-2">
+          {q.options.map((opt) => {
+            const isRight = opt.key === rightKey;
+            const isPicked = opt.key === userAnswer.trim().toUpperCase() && userAnswer.trim() !== "";
+            const style = isRight
+              ? "border-emerald-400 bg-emerald-50 text-emerald-800"
+              : isPicked && !ok
+                ? "border-rose-400 bg-rose-50 text-rose-700"
+                : "border-slate-200 bg-white text-slate-600";
+            return (
+              <div key={opt.key} className={`flex items-center gap-3 rounded-xl border px-4 py-2.5 text-sm ${style}`}>
+                <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-xs font-bold ${
+                  isRight ? "bg-emerald-500 text-white" : isPicked ? "bg-rose-500 text-white" : "bg-slate-100 text-slate-500"
+                }`}>{opt.key}</span>
+                <span className="min-w-0 flex-1"><RichText text={opt.text} /></span>
+                {isRight && <span className="shrink-0 text-[11px] font-semibold text-emerald-600">正确答案</span>}
+                {isPicked && !ok && <span className="shrink-0 text-[11px] font-semibold text-rose-500">你的答案</span>}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="mt-4 grid gap-2">
+          <div className={`flex items-start gap-3 rounded-xl border px-4 py-2.5 text-sm ${ok ? "border-emerald-200 bg-emerald-50/50 text-slate-700" : "border-rose-200 bg-rose-50/50 text-slate-700"}`}>
+            <span className="shrink-0 text-xs font-bold text-slate-400">你的答案</span>
+            <span className="min-w-0 flex-1 whitespace-pre-wrap"><RichText text={userAnswer || "（未作答）"} /></span>
+          </div>
+          <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50/50 px-4 py-2.5 text-sm text-slate-700">
+            <span className="shrink-0 text-xs font-bold text-emerald-600">正确答案</span>
+            <span className="min-w-0 flex-1 whitespace-pre-wrap"><RichText text={detail.correctAnswer} /></span>
+          </div>
+        </div>
+      )}
+
+      {/* 解析 */}
+      {detail.analysis ? (
+        <div className="mt-4 rounded-xl bg-slate-50 px-4 py-3">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500">
+            <svg viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5"><path fillRule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z" clipRule="evenodd" /></svg>
+            解析
+          </div>
+          <p className="mt-1.5 text-sm leading-relaxed text-slate-600"><RichText text={detail.analysis} /></p>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/* ---------- 诊断报告（含掌握度条形图 + 逐题回顾） ---------- */
+function ReportView({
+  report,
+  review,
+  onRestart,
+}: {
+  report: DiagnosisReport;
+  review: ReviewItem[];
+  onRestart: () => void;
+}) {
   const navigate = useNavigate();
   const pct = report.maxScore ? Math.round((report.score / report.maxScore) * 100) : 0;
   const ring = 2 * Math.PI * 42;
@@ -193,6 +296,26 @@ function ReportView({ report, onRestart }: { report: DiagnosisReport; onRestart:
           <p className="mt-3 text-xs text-rose-400">大纲已优先安排这些知识点的课程，我们马上开始。</p>
         </div>
       )}
+
+      {/* 逐题回顾：正确答案与解析 */}
+      {review.length > 0 && (
+        <div className="animate-fade-up-2">
+          <div className="mb-4 flex items-center gap-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5 text-brand-600">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            <h3 className="text-lg font-bold text-slate-800">逐题回顾</h3>
+            <span className="badge-slate">
+              对 {report.score} 题 / 错 {review.length - report.score} 题
+            </span>
+          </div>
+          <div className="space-y-4">
+            {review.map((item, i) => (
+              <ReviewCard key={item.q.id} item={item} index={i} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -211,7 +334,11 @@ export default function Diagnosis() {
   const [report, setReport] = useState<DiagnosisReport | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [result, setResult] = useState<{ score: number; maxScore: number } | null>(null);
+  const [result, setResult] = useState<{
+    score: number;
+    maxScore: number;
+    detail: Array<{ questionId: string; correct: boolean; correctAnswer: string; analysis: string }>;
+  } | null>(null);
 
   async function begin() {
     setBusy(true);
@@ -249,7 +376,7 @@ export default function Diagnosis() {
         timeSpentSec: 20,
       }));
       const res = await submitDiagnosis(assessmentId, payload);
-      setResult({ score: res.score, maxScore: res.maxScore });
+      setResult({ score: res.score, maxScore: res.maxScore, detail: res.detail });
       const rep = await getDiagnosisReport(assessmentId);
       setReport(rep);
       setPhase("report");
@@ -462,9 +589,16 @@ export default function Diagnosis() {
 
   /* 报告阶段 */
   if (report) {
+    const review: ReviewItem[] = questions
+      .map((q, i) => {
+        const d = result?.detail.find((dd) => dd.questionId === q.id);
+        if (!d) return null;
+        return { q, detail: d, userAnswer: answers[q.id] ?? "" };
+      })
+      .filter((x): x is ReviewItem => x !== null);
     return (
       <div>
-        <ReportView report={report} onRestart={() => setPhase("config")} />
+        <ReportView report={report} review={review} onRestart={() => setPhase("config")} />
         {result && (
           <div className="mt-4 text-center text-xs text-slate-400">
             本次得分 {result.score}/{result.maxScore}

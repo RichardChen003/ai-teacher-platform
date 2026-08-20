@@ -9,6 +9,7 @@
 import { writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { complexityScore, levelOf, difficultyOf, optionsText } from "./difficulty-score.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = resolve(root, "infra/d1/questions-template.sql");
@@ -427,12 +428,14 @@ function main() {
     const chunkSize = 8;
     for (let c = 0; c < items.length; c += chunkSize) {
       const chunk = items.slice(c, c + chunkSize);
-      lines.push(`INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version) VALUES`);
+      lines.push(`INSERT OR IGNORE INTO questions (id, subject, stage, grade_level, knowledge_point_id, type, difficulty, content, options, answer, analysis, source, review_status, textbook_version, level) VALUES`);
       chunk.forEach((q, idx) => {
-        const diff = (0.3 + (i0(c + idx) % 6) * 0.08).toFixed(2);
+        // 难度：按题面复杂度评分定档（与 relevel-questions.py 口径一致），避免伪随机错标
+        const lv = levelOf(complexityScore(q.content, optionsText(q.options)));
+        const diff = difficultyOf(lv).toFixed(2);
         const opts = q.options ?? "";
         lines.push(
-          `('${q.id}','math','${kp.stage}',${kp.grade},'${kp.id}','${q.type}',${diff},'${q.content.replace(/'/g, "''")}','${opts.replace(/'/g, "''")}','${q.answer}','${q.analysis.replace(/'/g, "''")}','template','approved','通用')${idx === chunk.length - 1 ? ";" : ","}`
+          `('${q.id}','math','${kp.stage}',${kp.grade},'${kp.id}','${q.type}',${diff},'${q.content.replace(/'/g, "''")}','${opts.replace(/'/g, "''")}','${q.answer}','${q.analysis.replace(/'/g, "''")}','template','approved','通用','${lv}')${idx === chunk.length - 1 ? ";" : ","}`
         );
       });
     }

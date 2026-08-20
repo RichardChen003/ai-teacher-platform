@@ -15,7 +15,7 @@ export function renderRichText(text: string): ReactNode[] {
           key={i}
           src={`/question-imgs/${parts[i]}`}
           alt=""
-          className="inline-block max-h-14 max-w-full align-middle"
+          className="inline-block max-h-32 max-w-full align-middle"
         />
       );
     } else if (parts[i]) {

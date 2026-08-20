@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
 """Windows GDI 原生渲染 WMF → 高清 PNG（与 Word 同一渲染引擎）
 用法: python wmf-gdi-render.py <input.wmf> <output.png> [dpi]
+说明: render_wmf_gdi 默认按「主字号归一」输出（所有公式图统一字号，观感一致）。
 """
 import ctypes
 import struct
 import sys
+import numpy as np
 from ctypes import wintypes as wt
+
+# 公式图统一目标主字号（px）：字符全高（数字/字母含上下伸展）
+TARGET_MAIN_FONT = 28
+# 几何图（坐标系/图形）不走字号归一，回退按宽度缩放
+GEOM_MAX_W = 700
 
 class BITMAPINFOHEADER(ctypes.Structure):
     _fields_ = [
@@ -53,10 +60,46 @@ gdi32.SetViewportExtEx.argtypes = [wt.HDC, ctypes.c_int, ctypes.c_int, ctypes.c_
 
 
 
+def _main_font_height(img):
+    """连通域分析估计主字号（px）。
+    数学公式字符连通域高度呈多峰分布：上下标/小符号偏矮、主字符集中、大符号（∑/√/括号）偏高。
+    取 p75（75 百分位）作为主字号，同一文档内稳定（实测 255~270）。
+    返回 (主字号, 过滤后连通域数, 最大域高度)；公式图应满足 主字号>=8 且 连通域数>=3。
+    """
+    try:
+        from scipy import ndimage
+    except Exception:
+        return None, 0, 0
+    gray = np.array(img.convert("L"))
+    w, h = gray.shape[1], gray.shape[0]
+    if w < 8 or h < 8:
+        return None, 0, 0
+    bw = gray < 160
+    lab, n = ndimage.label(bw)
+    hs = []
+    max_h = 0
+    for i in range(1, n + 1):
+        ys, xs = np.where(lab == i)
+        ch = ys.max() - ys.min() + 1
+        cw = xs.max() - xs.min() + 1
+        if ch < 8 or ch > h * 0.85:
+            continue  # 噪声 / 整列大图形
+        if cw > w * 0.7 and ch <= 3:
+            continue  # 分数线 / 根号横线
+        hs.append(ch)
+        max_h = max(max_h, ch)
+    if not hs:
+        return None, 0, 0
+    p75 = float(np.percentile(hs, 75))
+    return p75, len(hs), max_h
+
+
 def render_wmf_gdi(wmf_bytes, dpi=300, scale=3):
     """把 WMF 字节渲染为 PIL Image（白底，高清）。
     关键：MathType WMF 内部自带 SetMapMode/SetViewportExt 记录，播放时会覆盖外部缩放映射，
-    因此 DIB 必须按 WMF bbox 原始逻辑尺寸 1:1 创建，渲染完再用 PIL 放大 scale 倍。
+    因此 DIB 必须按 WMF bbox 原始逻辑尺寸 1:1 创建，渲染完再做归一化。
+    - 公式图：按主字号统一缩放（TARGET_MAIN_FONT），保证所有公式字体大小一致
+    - 几何图：按宽度上限缩放（GEOM_MAX_W），保持图形比例
     失败返回 None"""
     if not wmf_bytes or wmf_bytes[:4] != b"\xd7\xcd\xc6\x9a":
         return None
@@ -106,15 +149,29 @@ def render_wmf_gdi(wmf_bytes, dpi=300, scale=3):
         from PIL import Image
         img = Image.frombuffer("RGBA", (target_w, target_h), buf, "raw", "BGRA", 0, 1)
         img = img.convert("RGB")
-        # 阈值裁剪白边（忽略浅灰抗锯齿残留）+ 缩放到目标宽度，控制体积同时保证清晰
+        # 阈值裁剪白边（忽略浅灰抗锯齿残留）
         gray = img.convert("L")
         mask = gray.point(lambda v: 255 if v < 248 else 0)
         bbox = mask.getbbox()
         if bbox:
             img = img.crop(bbox)
-        max_w = 700
-        if img.width > max_w:
-            img = img.resize((max_w, max(1, int(img.height * max_w / img.width))), Image.LANCZOS)
+        # 归一化：公式/符号图按主字号统一，纯图形（无字符）按宽度上限
+        main_h, n_comp, max_h = _main_font_height(img)
+        if main_h and main_h > 8:
+            # 公式/符号：缩放到统一主字号
+            ratio = TARGET_MAIN_FONT / main_h
+            ratio = min(max(ratio, 0.03), 4.0)  # 防极端
+            img = img.resize(
+                (max(1, int(img.width * ratio)), max(1, int(img.height * ratio))),
+                Image.LANCZOS,
+            )
+        else:
+            # 几何图 / 单符号：按宽度上限缩放
+            if img.width > GEOM_MAX_W:
+                img = img.resize(
+                    (GEOM_MAX_W, max(1, int(img.height * GEOM_MAX_W / img.width))),
+                    Image.LANCZOS,
+                )
         gdi32.SelectObject(hdc, old)
         gdi32.DeleteObject(hbmp)
         return img
