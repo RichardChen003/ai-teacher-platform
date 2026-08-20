@@ -63,39 +63,44 @@ gdi32.SetViewportExtEx.argtypes = [wt.HDC, ctypes.c_int, ctypes.c_int, ctypes.c_
 
 def _main_font_height(img):
     """连通域分析估计主字号（px）。
-    数学公式字符连通域高度呈多峰分布：上下标/小符号偏矮、主字符集中、大符号（∑/√/括号）偏高。
-    取 p75（75 百分位）作为主字号，同一文档内稳定（实测 255~270）。
-    返回 (主字号, 过滤后连通域数, 最大域高度)；公式图应满足 主字号>=8 且 连通域数>=3。
+    返回 (主字号p75, 字符域数, 最大字符高度, 黑像素填充率, 方块大域数, 总域数)
+    - 主字号：字符连通域高度的 p75（同一文档稳定）
+    - fill：黑像素占比（区分空心图形与粗符号的关键）
+    - square_doms：被当图形的「方块整图级大域」数
     """
     try:
         from scipy import ndimage
     except Exception:
-        return None, 0, 0
+        return None, 0, 0, 0.0, 0, 0
     gray = np.array(img.convert("L"))
     w, h = gray.shape[1], gray.shape[0]
     if w < 8 or h < 8:
-        return None, 0, 0
+        return None, 0, 0, 0.0, 0, 0
     bw = gray < 160
+    fill = float(bw.sum()) / (w * h)
     lab, n = ndimage.label(bw)
     hs = []
     max_h = 0
+    square_doms = 0
     for i in range(1, n + 1):
         ys, xs = np.where(lab == i)
         ch = ys.max() - ys.min() + 1
         cw = xs.max() - xs.min() + 1
-        # 只把「方块状」整图级大域当图形过滤（Venn 圆等 w/h≈1）；
-        # 窄图（w/h<0.8）中 ch≈h 是单字符/符号占满裁剪框（如 d、∫、f），必须保留
-        # ——否则会被误判纯图形原样输出，导致单个字母大得离谱（2026-08-20 踩坑）
-        if ch < 8 or (ch > h * 0.95 and cw > w * 0.7 and w / h >= 0.8):
+        # 方块状整图级大域（w/h>=0.8）：可能是 Venn 圆等图形，也可能是粗体单符号
+        # （∪/∩/∅/粗字母）——先剔除统计，由调用方按填充率二次判断
+        if ch > h * 0.95 and cw > w * 0.7 and w / h >= 0.8:
+            square_doms += 1
             continue
+        if ch < 8:
+            continue  # 噪声
         if cw > w * 0.7 and ch <= 3:
             continue  # 分数线 / 根号横线
         hs.append(ch)
         max_h = max(max_h, ch)
     if not hs:
-        return None, 0, 0
+        return None, 0, 0, fill, square_doms, n
     p75 = float(np.percentile(hs, 75))
-    return p75, len(hs), max_h
+    return p75, len(hs), max_h, fill, square_doms, n
 
 
 def render_wmf_gdi(wmf_bytes, dpi=300, scale=3):
@@ -159,18 +164,28 @@ def render_wmf_gdi(wmf_bytes, dpi=300, scale=3):
         bbox = mask.getbbox()
         if bbox:
             img = img.crop(bbox)
-        # 归一化：公式/符号图按主字号统一，纯图形（无字符）按宽度上限
-        main_h, n_comp, max_h = _main_font_height(img)
+        # 归一化：公式/字符图按主字号统一；粗体单符号（方块、高填充）按高度统一；
+        # 纯图形（空心/细线/多元素）按宽度上限
+        main_h, n_comp, max_h, fill, square_doms, n_dom = _main_font_height(img)
         if main_h and main_h > 8:
-            # 公式/符号：缩放到统一主字号
+            # 公式/多字符：缩放到统一主字号
             ratio = TARGET_MAIN_FONT / main_h
             ratio = min(max(ratio, 0.03), 4.0)  # 防极端
             img = img.resize(
                 (max(1, int(img.width * ratio)), max(1, int(img.height * ratio))),
                 Image.LANCZOS,
             )
+        elif fill >= 0.18 and n_dom <= 10:
+            # 方块状粗体单符号/字母（∪、∩、∅、⊂、粗体字母等）：字符占满裁剪框，
+            # 无正常字符域可测——按图高缩放到主字号（2026-08-20 踩坑：曾被当图形原样输出）
+            ratio = TARGET_MAIN_FONT / max(img.height, 1)
+            ratio = min(max(ratio, 0.03), 4.0)
+            img = img.resize(
+                (max(1, int(img.width * ratio)), max(1, int(img.height * ratio))),
+                Image.LANCZOS,
+            )
         else:
-            # 几何图 / 单符号：按宽度上限缩放
+            # 图形（空心 Venn 圆/坐标系/多元素）：按宽度上限缩放
             if img.width > GEOM_MAX_W:
                 img = img.resize(
                     (GEOM_MAX_W, max(1, int(img.height * GEOM_MAX_W / img.width))),

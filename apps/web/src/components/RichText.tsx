@@ -13,7 +13,7 @@ export function renderRichText(text: string): ReactNode[] {
       nodes.push(
         <img
           key={i}
-          src={`/question-imgs/${parts[i]}`}
+          src={`/question-imgs/${parts[i]}?v=5`}
           alt=""
           className="inline-block max-h-32 max-w-full align-middle"
         />
