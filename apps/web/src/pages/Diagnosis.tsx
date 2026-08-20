@@ -28,11 +28,24 @@ export function QuestionCard({
   onChange: (v: string) => void;
 }) {
   const isChoice = q.type !== "short_answer";
+  // 难度标签配色：基础=绿 / 中档=琥珀 / 压轴=红
+  const levelStyle: Record<string, string> = {
+    基础: "border-emerald-200 bg-emerald-50 text-emerald-600",
+    中档: "border-amber-200 bg-amber-50 text-amber-600",
+    压轴: "border-rose-200 bg-rose-50 text-rose-600",
+  };
   return (
     <div className="card animate-fade-up p-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
         <span className="badge-blue">第 {index + 1} 题 / 共 {total} 题</span>
-        <span className="badge-slate">{q.type === "short_answer" ? "解答题" : "选择题"}</span>
+        <div className="flex items-center gap-1.5">
+          {q.level ? (
+            <span className={`rounded-md border px-2 py-0.5 text-[11px] font-semibold ${levelStyle[q.level] ?? "border-slate-200 bg-slate-50 text-slate-500"}`}>
+              {q.level}
+            </span>
+          ) : null}
+          <span className="badge-slate">{q.type === "short_answer" ? "解答题" : "选择题"}</span>
+        </div>
       </div>
       <p className="mt-4 text-[15px] font-medium leading-relaxed text-slate-800"><RichText text={q.content} /></p>
       {isChoice && q.options ? (

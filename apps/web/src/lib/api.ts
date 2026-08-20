@@ -118,6 +118,7 @@ export type Question = {
   knowledgePointId?: string;
   type: "single_choice" | "multi_choice" | "short_answer";
   difficulty?: number;
+  level?: string; // 难度档次：基础 / 中档 / 压轴
   content: string;
   options?: Array<{ key: string; text: string }>;
 };
