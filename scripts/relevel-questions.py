@@ -68,10 +68,14 @@ def complexity_score(content: str, options_text: str) -> int:
     return s
 
 
-def level_of(s: int) -> str:
+def level_of(s: int, stage: str = "高中") -> str:
     if s <= 1:
         return "基础"
     if s <= 4:
+        return "中档"
+    # 压轴须达到压轴题库（中考压轴题）水平：初中题面复杂度评分难量化图题，
+    # 保守起见初中生成题 S<=8 只到中档（初中压轴主要由 imported-junior-hard 压轴题库提供）
+    if stage == "初中" and s <= 8:
         return "中档"
     return "压轴"
 
@@ -98,10 +102,12 @@ def main():
     stats = {"基础": 0, "中档": 0, "压轴": 0}
     changed = 0
     skipped = 0
+    # 只重打标「生成题」；所有导入题（imported-*，含权威标签）保留
+    GEN_SOURCES = {"template", "template-hs", "template-j", "teacher"}
     for qid, source, kp, content, options, qtype, old_level, old_diff in rows:
-        if source == "imported-docx":
+        if source not in GEN_SOURCES:
             skipped += 1
-            continue  # 权威基准，不重打标
+            continue  # 权威/已标注题，不重打标
         opt_text = ""
         if options:
             try:
@@ -110,7 +116,9 @@ def main():
             except Exception:
                 opt_text = ""
         s = complexity_score(content or "", opt_text)
-        new_level = level_of(s)
+        # stage：从知识点表判断学段（生成题挂 jkp-*/hs-kp-*）
+        stage = "初中" if str(kp or "").startswith("jkp") else "高中"
+        new_level = level_of(s, stage)
         new_diff = difficulty_of(new_level, rng)
         stats[new_level] += 1
         if new_level != old_level or abs(new_diff - float(old_diff or 0)) > 1e-9:
