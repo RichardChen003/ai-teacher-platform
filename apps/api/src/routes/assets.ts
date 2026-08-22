@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import type { Env } from "../env";
+import { storageGet } from "../lib/storage";
 
 /**
  * 生成资产（PPT / 音频）
@@ -27,8 +28,8 @@ export const assetsRoutes = new Hono<{ Bindings: Env }>()
     if (asset.status !== "ready") {
       return c.json({ ok: false, code: "NOT_READY", message: "资产尚未生成完成" }, 409);
     }
-    // MVP：同域 Worker 直接流式返回 R2 对象（无需签名 URL，且更安全）
-    const obj = await c.env.PPT_ASSETS.get(String(asset.r2_key));
+    // MVP：同域 Worker 直接流式返回存储对象（无需签名 URL，且更安全）
+    const obj = await storageGet(c.env, String(asset.r2_key));
     if (!obj) return c.json({ ok: false, code: "NOT_FOUND", message: "文件不存在" }, 404);
     if (!obj.body) return c.json({ ok: false, code: "EMPTY", message: "文件为空" }, 500);
     const ext = String(asset.kind) === "pptx" ? "pptx" : "bin";

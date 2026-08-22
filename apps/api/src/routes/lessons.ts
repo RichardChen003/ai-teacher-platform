@@ -3,6 +3,7 @@ import { zValidator } from "@hono/zod-validator";
 import { SubmitAssessmentSchema } from "@aiteacher/shared";
 import { requireUserId } from "./auth";
 import { generateDeck, renderPptx, generateQuiz, submitQuiz } from "../lib/teaching";
+import { storageGet, storagePut } from "../lib/storage";
 import { newId } from "../db";
 import type { Env } from "../env";
 
@@ -56,7 +57,7 @@ export const lessonsRoutes = new Hono<{ Bindings: Env }>()
     });
   })
   .get("/lessons/:id/deck", async (c) => {
-    const obj = await c.env.PPT_ASSETS.get(`decks/${c.req.param("id")}.json`);
+    const obj = await storageGet(c.env, `decks/${c.req.param("id")}.json`);
     if (!obj) return c.json({ ok: false, code: "NOT_FOUND", message: "课件未生成，请先生成 PPT" }, 404);
     const deck = await obj.json();
     return c.json({ ok: true, data: deck });
@@ -82,14 +83,12 @@ export const lessonsRoutes = new Hono<{ Bindings: Env }>()
     }
 
     const deck = await generateDeck(c, { ...lesson, subject: lesson.subject ?? "math" }, kpNames);
-    // 课件 JSON 存 R2（网页演示/数字人用）
-    await c.env.PPT_ASSETS.put(`decks/${String(lesson.id)}.json`, JSON.stringify(deck), {
-      httpMetadata: { contentType: "application/json" },
-    });
-    // PPTX 渲染存 R2
+    // 课件 JSON 存存储（R2 或 KV 降级；网页演示/数字人用）
+    await storagePut(c.env, `decks/${String(lesson.id)}.json`, JSON.stringify(deck), "application/json");
+    // PPTX 渲染存存储
     const buf = await renderPptx(deck);
     const pptxKey = `pptx/${String(lesson.id)}.pptx`;
-    await c.env.PPT_ASSETS.put(pptxKey, buf, { httpMetadata: { contentType: "application/vnd.openxmlformats-officedocument.presentationml.presentation" } });
+    await storagePut(c.env, pptxKey, buf, "application/vnd.openxmlformats-officedocument.presentationml.presentation");
     // 资产登记
     const assetId = newId("ast");
     await c.env.DB.prepare(

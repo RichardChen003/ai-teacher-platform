@@ -2,15 +2,16 @@
 export type Env = {
   // 数据
   DB: D1Database;
-  PPT_ASSETS: R2Bucket;
-  AVATAR_ASSETS: R2Bucket;
-  UPLOADS: R2Bucket;
+  // PPT_ASSETS 可为空：R2 未启用时降级用 KV（见 lib/storage.ts）
+  PPT_ASSETS?: R2Bucket;
+  AVATAR_ASSETS?: R2Bucket;
+  UPLOADS?: R2Bucket;
   KV: KVNamespace;
-  // 队列
-  QUEUE_PPT: Queue<unknown>;
-  QUEUE_SYLLABUS: Queue<unknown>;
-  QUEUE_QUIZ: Queue<unknown>;
-  QUEUE_TTS: Queue<unknown>;
+  // 队列（暂未启用，保留类型）
+  QUEUE_PPT?: Queue<unknown>;
+  QUEUE_SYLLABUS?: Queue<unknown>;
+  QUEUE_QUIZ?: Queue<unknown>;
+  QUEUE_TTS?: Queue<unknown>;
   // 变量
   APP_NAME: string;
   LLM_PROVIDER: string;

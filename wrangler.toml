@@ -16,54 +16,37 @@ not_found_handling = "single-page-application"   # SPA 回退到 index.html
 [[d1_databases]]
 binding = "DB"
 database_name = "ai-teacher-db"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"     # wrangler d1 create 后填入
+database_id = "d1e23da3-7bb0-41a9-810e-f162618c279e"
 migrations_dir = "infra/d1/migrations"
 
-# ---------- 对象存储 ----------
-[[r2_buckets]]
-binding = "PPT_ASSETS"
-bucket_name = "ai-teacher-ppt"
-
-[[r2_buckets]]
-binding = "AVATAR_ASSETS"
-bucket_name = "ai-teacher-avatar"
-
-[[r2_buckets]]
-binding = "UPLOADS"
-bucket_name = "ai-teacher-uploads"
+# ---------- 对象存储（R2 未启用时由 lib/storage.ts 降级到 KV；账号启用 R2 后取消注释） ----------
+# [[r2_buckets]]
+# binding = "PPT_ASSETS"
+# bucket_name = "ai-teacher-ppt"
+#
+# [[r2_buckets]]
+# binding = "AVATAR_ASSETS"
+# bucket_name = "ai-teacher-avatar"
+#
+# [[r2_buckets]]
+# binding = "UPLOADS"
+# bucket_name = "ai-teacher-uploads"
 
 # ---------- KV（会话/缓存/任务状态） ----------
 [[kv_namespaces]]
 binding = "KV"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"             # wrangler kv namespace create KV 后填入
-
-# ---------- 队列（异步生成任务） ----------
-[[queues.producers]]
-binding = "QUEUE_PPT"
-queue = "ai-teacher-ppt-gen"
-
-[[queues.producers]]
-binding = "QUEUE_SYLLABUS"
-queue = "ai-teacher-syllabus-gen"
-
-[[queues.producers]]
-binding = "QUEUE_QUIZ"
-queue = "ai-teacher-quiz-gen"
-
-[[queues.producers]]
-binding = "QUEUE_TTS"
-queue = "ai-teacher-tts-gen"
+id = "4ef1c5c00a5d40ee87b9abeea9a70118"
 
 # ---------- 环境变量（敏感值用 .dev.vars / Secrets） ----------
 [vars]
 APP_NAME = "AI老师平台"
 LLM_PROVIDER = "deepseek"
-LLM_MODEL = "deepseek-chat"                     # DeepSeek-V3.2（非思考模式）
+LLM_MODEL = "deepseek-v4-flash"                 # 用户账号指定模型
 LLM_FALLBACK_MODEL = "glm-4-flash"
 AI_GATEWAY_BASE_URL = "https://gateway.ai.cloudflare.com/v1/REPLACE_WITH_ACCOUNT/REPLACE_WITH_GATEWAY"
 TTS_PROVIDER = "edge"                           # edge | volc | ali
 CONTENT_SAFETY_PROVIDER = "tencent"             # tencent | ali
-DEMO_MODE = "true"                              # 免登录演示模式（上线前改为 false / 移除）
+DEMO_MODE = "true"                              # 免登录演示模式（正式上线前改为 false / 移除）
 
 # ---------- Cron（定时任务） ----------
 [triggers]
